@@ -1,0 +1,16 @@
+events.out*
+*.png
+*.jpg
+*.JPEG
+*.log
+*.zip
+*.weights
+*.h5
+*.hdf5
+*.csv
+__pycache__/
+.DS_Store
+logs/
+event.out.tfevents*
+data/
+data-small/
