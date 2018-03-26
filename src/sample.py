@@ -1,41 +1,21 @@
 #####
 # Imports
 #####
+import argparse
 import numpy as np
 import pandas as pd
-import argparse
-
-#####
-# Load the CSV training file
-#####
-def load(csv_file):
-
-    #Import data
-    df = pd.read_csv(csv_file, header=0)
-
-    return df
 
 
 #####
-# Sample the data
+# Defaults
 #####
-def sample(df, pct, seed):
-    df = df.sample(frac=pct, random_state=seed)
-    dist = df.is_attributed.sum()/df.shape[0]
-    return df, dist
-
-
-#####
-# Save the data
-#####
-def save(df, outfile):
-    df.to_csv(outfile, encoding='utf-8', index=False)
+np.set_printoptions(formatter={"float": "{:0.5f}".format})
 
 
 #####
 # Execute the training process
 #####
-def execute(csvfile, pct, outfile, seed ):
+def execute(csvfile, pct, outfile, seed):
 
     print("Using csvfile: ", csvfile)
     print("Using pct:     ", pct)
@@ -44,15 +24,25 @@ def execute(csvfile, pct, outfile, seed ):
 
     np.random.seed(seed)
 
-    print("Loading data, csvfile: ", csvfile)
-    df = load(csvfile)
+    # Large files sizes require chunking (otherwise memory usage errors occur)
+    chunksize = 10000000
+    chunknum = 0
+    for chunk in pd.read_csv(csvfile, header=0, chunksize=chunksize):
+        print("\n--- Chunk: ", chunknum, ", size: ", chunksize)
+        chunk = chunk.sample(frac=pct, random_state=seed)
+        count = chunk.is_attributed.sum()
+        dist = count/chunk.shape[0]
+        print("Count: {:5} Distribution: {:0.5f}".format(count, dist))
 
-    print("Sampling data, pct: ", pct)
-    df, dist = sample(df, pct, seed)
-    print("Sampling distribution (pct is_attributed): ", dist)
+        with_header = False
+        if chunknum == 0:
+            with_header = True
 
-    print("Saving data, outfile: ", outfile)
-    save(df, outfile)
+        with open(outfile, "a") as f:
+            chunk.to_csv(f, encoding="utf-8", header=with_header, index=False)
+
+        chunknum = chunknum + 1
+
 
 #####
 # Parse the command line
@@ -89,7 +79,7 @@ def main():
     if not args.outfile:
         raise Exception("Missing argument: --outfile")
     if not args.seed:
-        args.seed = RANDOM_SEED
+        args.seed = 42
 
     # Execute the command
     execute(args.csvfile, float(args.pct), args.outfile, int(args.seed))

@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #
-# Purpose:  Training script
+# Purpose:  Autoencoder script
 #
 # Author:  Eric Broda, ericbroda@rogers.com
 #
 # Parameters:
-#    [csvfile] is the CSV file containing training data (required)
+#    [csvfile] is the CSV file containing autoencodering data (required)
 #    [model-dir] is the fully qualified directory to store checkpoint models (required)
 #    [log-dir] is the fully qualified directory where the tensorboard logs will be saved (required)
 #    [epochs] is the number of epochs (optional, default: 100)
@@ -15,25 +15,27 @@
 #
 # Usage:
 #
-#   train.sh [csvfile] [model-dir] [log-dir] [epochs] [batch]
+#   autoencoder.sh [csvfile] [model-dir] [log-dir] [epochs] [batch]
 #
-#   example: train.sh ../data/train_sample.csv ../models ../logs 100 1000
+#   example: autoencoder.sh ../data/train_sample.csv ../models ../logs 100 1000
 #
 
 function showHelp {
     echo " "
     echo "Error: $1"
     echo " "
-    echo "    train.sh [csvfile] [model-dir] [log-dir] [epochs] [batch] [seed]"
+    echo "    autoencoder.sh [csvfile] [model-dir] [log-dir] [epochs] [batch] [seed]"
     echo " "
-    echo "    where [csvfile] is the CSV file containing training data (required)"
+    echo "    where [csvfile] is the CSV file containing autoencodering data (required)"
     echo "          [model-dir] is the fully qualified directory to store checkpoint models (required)"
     echo "          [log-dir] is the fully qualified directory where the tensorboard logs will be saved (required)"
-    echo "          [epochs] is the number of epochs (optional, default: 100)"
-    echo "          [batch] is the batch size (optional, default: 1000)"
-    echo "          [seed] is the random seed (optional, default: 0)"
+    echo "          [epochs] is the number of epochs (required)"
+    echo "          [batch] is the batch size (required)"
+    echo "          [seed] is the random seed (required)"
+    echo "          [operation] is the set of operations to perform (required, comma separated, one of: train|predict)"
+    echo "          [threshold] is the threshold for errors used in predictions (required)"
     echo " "
-    echo "    example 1:  train.sh ../data/train_sample.csv ../models ../logs 100 1000 0"
+    echo "    example 1:  autoencoder.sh ../data/train_sample.csv ../models ../logs 100 1000 0"
     echo " "
 }
 
@@ -60,17 +62,30 @@ xLOGDIR=$(realpath $xLOGDIR)
 
 xEPOCHS="$4"
 if [ -z "$4" ]; then
-  xEPOCHS=100
+  showHelp "[epochs] parameter is missing"
+  exit
 fi
 
 xBATCH="$5"
 if [ -z "$5" ]; then
-  xBATCH=1000
+  showHelp "[batch] parameter is missing"
+  exit
 fi
 
 xSEED="$6"
 if [ -z "$6" ]; then
-  xSEED=0
+  showHelp "[seed] parameter is missing"
+  exit
+fi
+
+xOPERATION="$7"
+if [ -z "$7" ]; then
+  xOPERATION="train"
+fi
+
+xTHRESHOLD="$8"
+if [ -z "$8" ]; then
+  xTHRESHOLD=25
 fi
 
 xROOTDIR=$(realpath ../)
@@ -86,6 +101,8 @@ echo "Log Directory:   $xLOGDIR"
 echo "Epochs:          $xEPOCHS"
 echo "Batch Size:      $xBATCH"
 echo "Seed:            $xSEED"
+echo "Operation:       $xOPERATION"
+echo "Threshold:       $xTHRESHOLD"
 echo "Root Directory:  $xROOTDIR"
 echo "Source Dir:      $xSRCDIR"
 echo " "
@@ -94,11 +111,13 @@ echo "Clearing old TF log files"
 rm ./logs/events.out.tfevents*
 
 echo "Start: "; date
-time python3 $xSRCDIR/train.py \
+time python3 $xSRCDIR/autoencoder.py \
               --csvfile $xCSVFILE \
               --modeldir $xMODELDIR \
               --logdir $xLOGDIR \
               --epochs $xEPOCHS \
               --batch $xBATCH \
-              --seed $xSEED
+              --seed $xSEED \
+              --operation $xOPERATION \
+              --threshold $xTHRESHOLD
 echo "End: "; date

@@ -26,9 +26,6 @@ function showHelp {
     echo "    where [csvfile] is the CSV file containing test/submission data (required)"
     echo "          [submissionfile] is the fully qualified filename to store the submission data (required)"
     echo "          [modelfile] is the fully qualified filename for the model HDF5 file (required)"
-    echo "          [epochs] is the number of epochs (optional, default: 100)"
-    echo "          [batch] is the batch size (optional, default: 1000)"
-    echo "          [seed] is the random seed (optional, default: 0)"
     echo " "
     echo "    example 1:  submit.sh ../data/test.csv ../data/submission.csv ../models/model-final-auc-1.0.h5"
     echo " "
@@ -61,13 +58,16 @@ cd $xROOTDIR
 xSRCDIR=$(realpath $xROOTDIR/src)
 
 echo " "
-echo "---- Training Parameters ----"
+echo "---- Submit Parameters ----"
 echo "CSV File:        $xCSVFILE"
 echo "Submission file: $xSUBMISSIONFILE"
 echo "Model file:      $xMODELFILE"
 echo "Root Directory:  $xROOTDIR"
 echo "Source Dir:      $xSRCDIR"
 echo " "
+
+echo "Removing (previous) submission file: " $xSUBMISSIONFILE
+rm $xSUBMISSIONFILE
 
 echo "Start: "; date
 time python3 $xSRCDIR/submit.py \

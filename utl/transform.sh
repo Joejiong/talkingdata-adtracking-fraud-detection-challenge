@@ -21,7 +21,7 @@ function showHelp {
     echo " "
     echo "Error: $1"
     echo " "
-    echo "    transform.sh [csvfile] [outfile] [ip-buckets] [app-buckets] [os-buckets] [channel-buckets] [device-buckets]"
+    echo "    transform.sh [csvfile] [outfile] [ip-buckets] [app-buckets] [os-buckets] [channel-buckets] [device-buckets] [chunk]"
     echo " "
     echo "    where [csvfile] is the CSV file containing training data (required)"
     echo "          [outfile] is the fully qualified filename for the retrieved data (required)"
@@ -30,8 +30,9 @@ function showHelp {
     echo "          [os-buckets] is the number of IP buckets (optional, default: 15)"
     echo "          [channel-buckets] is the number of IP buckets (optional, default: 15)"
     echo "          [device-buckets] is the number of IP buckets (optional, default: 15)"
+    echo "          [chunk] indicates that file is to be chucked into smaller files (default: False)"
     echo " "
-    echo "    example 1:  transform.sh ../data/train_sample.csv ../data/tranform.csv 15"
+    echo "    example 1:  transform.sh ../data/train_sample.csv ../data/tranform.csv 15 False"
     echo " "
 }
 
@@ -79,13 +80,18 @@ if [ -z "$7" ]; then
   exit
 fi
 
+xCHUNK="$8"
+if [ -z "$8" ]; then
+  xCHUNK=False
+fi
+
 xROOTDIR=$(realpath ../)
 cd $xROOTDIR
 
 xSRCDIR=$(realpath $xROOTDIR/src)
 
 echo " "
-echo "---- Sampling Parameters ----"
+echo "---- Transform Parameters ----"
 echo "CSV File:            $xCSVFILE"
 echo "Output file:         $xOUTFILE"
 echo "Num IP Buckets:      $xIPBUCKETS"
@@ -93,6 +99,7 @@ echo "Num APP Buckets:     $xAPPBUCKETS"
 echo "Num OS Buckets:      $xOSBUCKETS"
 echo "Num CHANNEL Buckets: $xCHANNELBUCKETS"
 echo "Num DEVICE Buckets:  $xDEVICEBUCKETS"
+echo "Chunk:               $xCHUNK"
 echo "Root Directory:      $xROOTDIR"
 echo "Source Dir:          $xSRCDIR"
 echo " "
@@ -106,5 +113,6 @@ time python3 $xSRCDIR/transform.py \
               --appbuckets $xAPPBUCKETS \
               --osbuckets $xOSBUCKETS \
               --channelbuckets $xCHANNELBUCKETS \
-              --devicebuckets $xDEVICEBUCKETS
+              --devicebuckets $xDEVICEBUCKETS \
+              --chunk $xCHUNK
 echo "End: "; date

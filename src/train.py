@@ -33,8 +33,8 @@ RLRP_PATIENCE = 7
 RLRP_MIN_LR = 1e-4
 RLRP_FACTOR = 0.5
 
-OPT_LEARNING_RATE = 1.0*1e-6
-OPT_DECAY = 1e-7
+OPT_LEARNING_RATE = 1.0*1e-4
+OPT_DECAY = 1e-5
 
 #####
 # Defaults
@@ -43,7 +43,7 @@ EPOCHS = 100
 BATCH_SIZE = 1000
 RANDOM_SEED = 0
 
-LAYER1_SIZE = 2000
+LAYER1_SIZE = 500
 
 #####
 # Some programatic default values
@@ -55,7 +55,7 @@ sns.set_style("whitegrid")
 #####
 # Create the model
 #####
-def create_model(input_dim, output_dim):
+def create_model(input_dim, output_dim, seed):
 
     l1 = LAYER1_SIZE
     l2 = int(l1*1.0)
@@ -72,17 +72,17 @@ def create_model(input_dim, output_dim):
     # kernel_regularizer=regularizers.l2(0.01), activity_regularizer=regularizers.l1(0.01)
     model = Sequential([
         Dense(units=l1, input_dim=input_dim, kernel_initializer="normal", activation="tanh"),
-        Dropout(d1),
+        Dropout(d1, seed=seed),
         Dense(units=l2, activation="tanh"),
-        Dropout(d2),
+        Dropout(d2, seed=seed),
         # Dense(l3, kernel_initializer="normal", activation="tanh"),
-        # Dropout(d3),
+        # Dropout(d3, seed=seed),
         # Dense(l4, kernel_initializer="normal", activation="tanh"),
-        # Dropout(d4),
+        # Dropout(d4, seed=seed),
         # Dense(l5, kernel_initializer="normal", activation="tanh"),
-        # Dropout(d5),
+        # Dropout(d5, seed=seed),
         # Dense(l6, kernel_initializer="normal", activation="tanh"),
-        # Dropout(l6),
+        # Dropout(l6, seed=seed),
         Dense(output_dim, kernel_initializer="uniform", activation="sigmoid")
     ])
     model.summary()
@@ -103,12 +103,31 @@ def create_model(input_dim, output_dim):
 #####
 # Load the CSV training file
 #####
-def load(csv_file):
+def load(csv_file, seed):
 
-    #Import data
+    # Import data
     df = pd.read_csv(csv_file, header=0)
+    # xdf = pd.read_csv("./data/transform-xones.csv", header=0)
+    # df = df.append(xdf)
 
-    #Check num of cases in label
+
+    # Add the autoencoder hints
+    # hint_df = pd.read_csv("autoencoder-predictions.csv", header=0)
+    # df["hint-50"] = hint_df.prediction.values
+
+    # hint_df = pd.read_csv("autoencoder-predictions-50.csv", header=0)
+    # df["hint-50"] = hint_df.prediction.values
+    #
+    # hint_df = pd.read_csv("autoencoder-predictions-100.csv", header=0)
+    # df["hint-100"] = hint_df.prediction.values
+    #
+    # hint_df = pd.read_csv("autoencoder-predictions-200.csv", header=0)
+    # df["hint-200"] = hint_df.prediction.values
+    #
+    # hint_df = pd.read_csv("autoencoder-predictions-300.csv", header=0)
+    # df["hint-300"] = hint_df.prediction.values
+
+    # Check num of cases in label
     print(df.is_attributed.value_counts()) #very imbalanced data set
 
     # #Create new variables
@@ -123,7 +142,7 @@ def load(csv_file):
     # df = pd.get_dummies(df, columns = categorical_columns)
 
     #Split train test set
-    train_df, test_df = train_test_split(df, test_size=0.20, random_state=RANDOM_SEED)
+    train_df, test_df = train_test_split(df, test_size=0.20, random_state=seed)
 
     #Make sure labels are equally distributed in train and test set
     train_dist = train_df.is_attributed.sum()/train_df.shape[0] #0.2233
@@ -144,7 +163,7 @@ def load(csv_file):
     train_y = np.array(train_y)
     test_y = np.array(test_y)
 
-    return train_x, train_y, test_x, test_y
+    return train_x, train_y, test_x, test_y, df
 
 
 #####
@@ -194,20 +213,23 @@ def show_history(history):
 #####
 # Show AUC in text and graphical format
 #####
-def show_AUC(Y_actual, Y_prediction):
+def show_AUC(Y_actual, Y_prediction, with_graphics=False):
     false_positive_rate, recall, thresholds = roc_curve(Y_actual, Y_prediction)
     roc_auc = auc(false_positive_rate, recall)
     print("ROC-AUC: ", roc_auc)
-    plt.figure()
-    plt.title('Receiver Operating Characteristic (ROC)')
-    plt.plot(false_positive_rate, recall, 'b', label = 'AUC = %0.3f' %roc_auc)
-    plt.legend(loc='lower right')
-    plt.plot([0,1], [0,1], 'r--')
-    plt.xlim([0.0,1.0])
-    plt.ylim([0.0,1.0])
-    plt.ylabel('Recall')
-    plt.xlabel('Fall-out (1-Specificity)')
-    plt.show()
+
+    if with_graphics:
+        plt.figure()
+        plt.title('Receiver Operating Characteristic (ROC)')
+        plt.plot(false_positive_rate, recall, 'b', label = 'AUC = %0.3f' %roc_auc)
+        plt.legend(loc='lower right')
+        plt.plot([0,1], [0,1], 'r--')
+        plt.xlim([0.0,1.0])
+        plt.ylim([0.0,1.0])
+        plt.ylabel('Recall')
+        plt.xlabel('Fall-out (1-Specificity)')
+        plt.show()
+
     return roc_auc
 
 
@@ -273,6 +295,7 @@ def kauc(y_true, y_pred):
    with tf.control_dependencies([up_opt]):
        score = tf.identity(score)
    return score
+
 
 #####
 # Tensorflow native AUC for a binary classifier -- sometimes gies NAN, use kauc (above)
@@ -346,26 +369,52 @@ def train(model, train_x, train_y, epochs, batch_size, modeldir, logdir):
 def score(model, test_x, test_y):
 
     #Predict on test set
-    predictions_NN_prob = model.predict(test_x)
-    predictions_NN_prob = predictions_NN_prob[:,0]
+    raw_predictions = model.predict(test_x)
+    probabilities = raw_predictions[:,0]
+    false_positive_rate, recall, thresholds = roc_curve(test_y, probabilities)
+    roc_auc = auc(false_positive_rate, recall)
+    print("INITIAL ROC-AUC: {:0.6f}".format(roc_auc))
+    return roc_auc, probabilities
 
-    #Turn probability to 0-1 binary output
-    predictions_NN_01 = np.where(predictions_NN_prob > 0.5, 1, 0)
-    # predictions_NN_01 = predictions_NN_prob
+    #####
+    # The rest of the code below is experimentation to get a better ROC by thresholding
+    # probabilities -- it did not help
+    #####
 
-    print('Accuracy:  ', accuracy_score(test_y, predictions_NN_01))
-    print('Precision: ', precision_score(test_y, predictions_NN_01))
-    print('Recall:    ', recall_score(test_y, predictions_NN_01))
-    print('F1:        ', f1_score(test_y, predictions_NN_01))
-    print('\nClassification Report:\n', classification_report(test_y, predictions_NN_01))
+    roc_auc = 0.0
+    best_roc_auc = 0.0
+    best_predictions = None
+    best_threshold = 0
 
-    # Show Area Under Curve (key evaluation metric)
-    roc_auc = show_AUC(test_y, predictions_NN_prob)
+    thresholds = np.linspace(0.0, 1.0, 99)
+    for threshold in thresholds:
 
-    # Since this is a classifier, show the confusion matrix
-    show_confusion_matrix(test_y, predictions_NN_01, ["FRAUD", "OK"], with_graphics=True)
+        # print("\n\n-------------- Threshold: ", threshold)
+        #Turn probability to 0-1 binary output
+        predictions = np.where(probabilities > threshold, 1, 0)
+        # predictions = probabilities
 
-    return roc_auc
+        # print('Accuracy:  ', accuracy_score(test_y, predictions))
+        # print('Precision: ', precision_score(test_y, predictions))
+        # print('Recall:    ', recall_score(test_y, predictions))
+        # print('F1:        ', f1_score(test_y, predictions))
+        # print('\nClassification Report:\n', classification_report(test_y, predictions))
+
+        # Show Area Under Curve (key evaluation metric)
+        false_positive_rate, recall, thresholds = roc_curve(test_y, predictions)
+        roc_auc = auc(false_positive_rate, recall)
+        # roc_auc = show_AUC(test_y, predictions, with_graphics=False)
+
+        # Since this is a classifier, show the confusion matrix
+        # show_confusion_matrix(test_y, predictions, ["FRAUD", "OK"], with_graphics=False)
+
+        if roc_auc > best_roc_auc:
+            best_roc_auc = roc_auc
+            best_predictions = predictions
+            best_threshold = threshold
+            print("MAX -- threshold: {:0.4f} ROC-AUC: {:0.6f}".format(threshold, roc_auc))
+
+    return best_roc_auc, best_predictions
 
 
 #####
@@ -394,7 +443,7 @@ def execute(csvfile, modeldir, logdir, epochs, batch_size, seed ):
 
     print("Loading data, csvfile: ", csvfile)
     # csv_file = '../data/train_sample.csv'
-    train_x, train_y, test_x, test_y = load(csvfile)
+    train_x, train_y, test_x, test_y, df = load(csvfile, seed)
 
     print("Creating model")
     input_dim = train_x.shape[1]
@@ -402,21 +451,42 @@ def execute(csvfile, modeldir, logdir, epochs, batch_size, seed ):
     print("Using input_dim:  ", input_dim)
     print("Using output_dim: ", output_dim)
 
-    model = create_model(input_dim, output_dim)
+    model = create_model(input_dim, output_dim, seed)
 
     print("Training model")
     history = train(model, train_x, train_y, epochs, batch_size, modeldir, logdir)
 
     print("Showing history")
-    show_history(history)
+    # show_history(history)
 
     print("Scoring model")
-    roc_auc = score(model, test_x, test_y)
+    roc_auc, predictions = score(model, test_x, test_y)
     x = "%0.6f" % roc_auc
+
+    print("Final ROC-AUC: ", roc_auc)
+
+    # click_ids = np.arange(len(predictions))
+    # predictionspath = "predictions-" + x + ".csv"
+    # print("Saving predictions: ", predictionspath)
+    # save_submission(click_ids, predictions, predictionspath)
 
     modelpath = modeldir + "/" + "model-final-auc-" + x + ".h5"
     print("Saving final model: ", modelpath)
     save_model(model, modelpath)
+
+
+#####
+# Create submission
+#####
+def save_submission(click_ids, predictions, submission_file):
+    submission = pd.DataFrame()
+    submission["click_id"] = click_ids
+    submission["is_attributed"] = predictions
+
+    with open(submission_file, "a") as f:
+        submission.to_csv(f, header=True, index=False)
+
+    return submission
 
 
 #####

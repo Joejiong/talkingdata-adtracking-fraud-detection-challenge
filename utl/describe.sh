@@ -40,7 +40,7 @@ cd $xROOTDIR
 xSRCDIR=$(realpath $xROOTDIR/src)
 
 echo " "
-echo "---- Sampling Parameters ----"
+echo "---- Describe Parameters ----"
 echo "CSV File:       $xCSVFILE"
 echo "Root Directory: $xROOTDIR"
 echo "Source Dir:     $xSRCDIR"

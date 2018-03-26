@@ -21,53 +21,54 @@ def load(csv_file):
 #####
 def describe(df):
 
-    df.head()
+    if "attributed_time" in df.columns:
+        df[df["is_attributed"]==1].ip.describe()
 
-    df.describe()
+        proportion = df[["ip", "is_attributed"]].groupby("ip", as_index=False).mean().sort_values("is_attributed", ascending=False)
+        counts = df[["ip", "is_attributed"]].groupby("ip", as_index=False).count().sort_values("is_attributed", ascending=False)
+        merge = counts.merge(proportion, on="ip", how="left")
+        merge.columns = ["ip", "click_count", "prop_downloaded"]
+        print("Conversion Rates over Counts of Most Popular IPs")
+        print(merge[:20])
+        print("\n")
 
-    df[df["is_attributed"]==1].ip.describe()
+        proportion = df[["app", "is_attributed"]].groupby("app", as_index=False).mean().sort_values("is_attributed", ascending=False)
+        counts = df[["app", "is_attributed"]].groupby("app", as_index=False).count().sort_values("is_attributed", ascending=False)
+        merge = counts.merge(proportion, on="app", how="left")
+        merge.columns = ["app", "click_count", "prop_downloaded"]
+        print("Conversion Rates over Counts of Most Popular Apps")
+        print(merge[:20])
+        print("\n")
 
-    proportion = df[["ip", "is_attributed"]].groupby("ip", as_index=False).mean().sort_values("is_attributed", ascending=False)
-    counts = df[["ip", "is_attributed"]].groupby("ip", as_index=False).count().sort_values("is_attributed", ascending=False)
-    merge = counts.merge(proportion, on="ip", how="left")
-    merge.columns = ["ip", "click_count", "prop_downloaded"]
-    print("Conversion Rates over Counts of Most Popular IPs")
-    print(merge[:20])
-    print("\n")
+        proportion = df[["os", "is_attributed"]].groupby("os", as_index=False).mean().sort_values("is_attributed", ascending=False)
+        counts = df[["os", "is_attributed"]].groupby("os", as_index=False).count().sort_values("is_attributed", ascending=False)
+        merge = counts.merge(proportion, on="os", how="left")
+        merge.columns = ["os", "click_count", "prop_downloaded"]
+        print("Conversion Rates over Counts of Most Popular Operating Systems")
+        print(merge[:20])
+        print("\n")
 
-    proportion = df[["app", "is_attributed"]].groupby("app", as_index=False).mean().sort_values("is_attributed", ascending=False)
-    counts = df[["app", "is_attributed"]].groupby("app", as_index=False).count().sort_values("is_attributed", ascending=False)
-    merge = counts.merge(proportion, on="app", how="left")
-    merge.columns = ["app", "click_count", "prop_downloaded"]
-    print("Conversion Rates over Counts of Most Popular Apps")
-    print(merge[:20])
-    print("\n")
+        proportion = df[["device", "is_attributed"]].groupby("device", as_index=False).mean().sort_values("is_attributed", ascending=False)
+        counts = df[["device", "is_attributed"]].groupby("device", as_index=False).count().sort_values("is_attributed", ascending=False)
+        merge = counts.merge(proportion, on="device", how="left")
+        merge.columns = ["device", "click_count", "prop_downloaded"]
+        print("Count of clicks and proportion of downloads by device:")
+        print(merge[:20])
+        print("\n")
 
-    proportion = df[["os", "is_attributed"]].groupby("os", as_index=False).mean().sort_values("is_attributed", ascending=False)
-    counts = df[["os", "is_attributed"]].groupby("os", as_index=False).count().sort_values("is_attributed", ascending=False)
-    merge = counts.merge(proportion, on="os", how="left")
-    merge.columns = ["os", "click_count", "prop_downloaded"]
-    print("Conversion Rates over Counts of Most Popular Operating Systems")
-    print(merge[:20])
-    print("\n")
+        proportion = df[["channel", "is_attributed"]].groupby("channel", as_index=False).mean().sort_values("is_attributed", ascending=False)
+        counts = df[["channel", "is_attributed"]].groupby("channel", as_index=False).count().sort_values("is_attributed", ascending=False)
+        merge = counts.merge(proportion, on="channel", how="left")
+        merge.columns = ["channel", "click_count", "prop_downloaded"]
+        print("Conversion Rates over Counts of Most Popular Channels")
+        print(merge[:20])
+        print("\n")
 
-    proportion = df[["device", "is_attributed"]].groupby("device", as_index=False).mean().sort_values("is_attributed", ascending=False)
-    counts = df[["device", "is_attributed"]].groupby("device", as_index=False).count().sort_values("is_attributed", ascending=False)
-    merge = counts.merge(proportion, on="device", how="left")
-    merge.columns = ["device", "click_count", "prop_downloaded"]
-    print("Count of clicks and proportion of downloads by device:")
-    print(merge[:20])
-    print("\n")
+    print(df.head())
 
-    proportion = df[["channel", "is_attributed"]].groupby("channel", as_index=False).mean().sort_values("is_attributed", ascending=False)
-    counts = df[["channel", "is_attributed"]].groupby("channel", as_index=False).count().sort_values("is_attributed", ascending=False)
-    merge = counts.merge(proportion, on="channel", how="left")
-    merge.columns = ["channel", "click_count", "prop_downloaded"]
-    print("Conversion Rates over Counts of Most Popular Channels")
-    print(merge[:20])
-    print("\n")
+    print(df.describe())
 
-    print("Characteristics:")
+    print("\nCharacteristics:")
     print("Column: app")
     print("  unique:     ", len(df["app"].unique()))
     print("  maximum:    ", df["app"].max())

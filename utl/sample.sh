@@ -64,7 +64,7 @@ cd $xROOTDIR
 xSRCDIR=$(realpath $xROOTDIR/src)
 
 echo " "
-echo "---- Sampling Parameters ----"
+echo "---- Sample Parameters ----"
 echo "CSV File:       $xCSVFILE"
 echo "Pct sampled:    $xPCT"
 echo "Output file:    $xOUTFILE"
@@ -72,6 +72,9 @@ echo "Seed:           $xSEED"
 echo "Root Directory: $xROOTDIR"
 echo "Source Dir:     $xSRCDIR"
 echo " "
+
+echo "Removing (previous) output file: " $xOUTFILE
+rm $xOUTFILE
 
 # rm train*.log
 echo "Start: "; date
