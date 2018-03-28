@@ -113,20 +113,14 @@ def save(df, outfile, ischunked):
 
         print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
         print("Chunking rows: start: ", start, ", end: ", end)
-        xdf = df.iloc[start:end,0:c]
-        # print(xdf.shape)
-        # print(xdf.head(n=2))
-        # print("outfile: ", outfile)
-        filename = outfile.split(".csv")[0]
-        # print("filename: ", filename)
-        chunkname = "{}-{:010d}-{:010d}.csv".format(filename, start, end)
-        print("Saving chunk file: ", chunkname)
+        chunk = df.iloc[start:end,0:c]
 
         header = False
         if i==0:
             header = True
-        xdf.to_csv(chunkname, encoding="utf-8", index=False, chunksize=10000, header=header)
 
+        with open(outfile, "a") as f:
+            chunk.to_csv(f, header=with_header, index=False)
 
     # start = end+1
     # end = r
