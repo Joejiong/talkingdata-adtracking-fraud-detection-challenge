@@ -115,9 +115,9 @@ def save(df, outfile, ischunked):
         print("Chunking rows: start: ", start, ", end: ", end)
         chunk = df.iloc[start:end,0:c]
 
-        header = False
+        with_header = False
         if i==0:
-            header = True
+            with_header = True
 
         with open(outfile, "a") as f:
             chunk.to_csv(f, header=with_header, index=False)
