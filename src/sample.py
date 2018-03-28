@@ -30,9 +30,11 @@ def execute(csvfile, pct, outfile, seed):
     for chunk in pd.read_csv(csvfile, header=0, chunksize=chunksize):
         print("\n--- Chunk: ", chunknum, ", size: ", chunksize)
         chunk = chunk.sample(frac=pct, random_state=seed)
-        count = chunk.is_attributed.sum()
-        dist = count/chunk.shape[0]
-        print("Count: {:5} Distribution: {:0.5f}".format(count, dist))
+
+        if "is_attributed" in chunk.columns.values:
+            count = chunk.is_attributed.sum()
+            dist = count/chunk.shape[0]
+            print("Count: {:5} Distribution: {:0.5f}".format(count, dist))
 
         with_header = False
         if chunknum == 0:

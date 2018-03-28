@@ -58,49 +58,6 @@ def transform(df, ipbuckets, appbuckets, osbuckets, channelbuckets, devicebucket
         ].count().reset_index().rename(index=str, columns={"channel": "app_qty"})
     df = df.merge(gp, on=["app","click_day","click_hour"], how="left")
 
-    # os_qty: REMOVE
-    # gp = df[["os","click_day","click_hour","channel"]].groupby(by=[
-    #     "os","click_day","click_hour"])[["channel"]
-    #     ].count().reset_index().rename(index=str, columns={"channel": "os_qty"})
-    # df = df.merge(gp, on=["os","click_day","click_hour"], how="left")
-
-    # app_hour: REMOVE
-    # gp = df[["app","click_hour","channel"]].groupby(by=[
-    #     "app","click_hour"])[["channel"]
-    #     ].count().reset_index().rename(index=str, columns={"channel": "app_hour"})
-    # df = df.merge(gp, on=["app","click_hour"], how="left")
-
-    # app_day: REMOVE
-    # gp = df[["app","click_day","channel"]].groupby(by=[
-    #     "app","click_day"])[["channel"]
-    #     ].count().reset_index().rename(index=str, columns={"channel": "app_day"})
-    # df = df.merge(gp, on=["app","click_day"], how="left")
-
-    # app_channel: REMOVE
-    # gp = df[["app","channel"]].groupby(by=["app"])[["channel"]
-    #     ].count().reset_index().rename(index=str, columns={"channel": "app_channel"})
-    # df = df.merge(gp, on=["app"], how="left")
-
-    # gp = df[["ip","device"]].groupby(by=["ip"])[["device"]
-    #     ].count().reset_index().rename(index=str, columns={"device": "ip_device"})
-    # df = df.merge(gp, on=["ip"], how="left")
-
-    # gp = df[["os","channel"]].groupby(by=["os"])[["channel"]
-    #     ].count().reset_index().rename(index=str, columns={"channel": "os_channel"})
-    # df = df.merge(gp, on=["os"], how="left")
-
-    ##### This did NOT help!!  (reduced score)
-    # ip_count = df.groupby(["ip"])["channel"].count().reset_index()
-    # ip_count.columns = ["ip", "clicks_by_ip"]
-    # df = pd.merge(df, ip_count, on="ip", how="left", sort=False)
-    # df["clicks_by_ip"] = df["clicks_by_ip"].astype("uint16")
-    # print(df.head())
-    # return
-
-    # Not useful!
-    # df["app_channel"] = df["app"].astype("str")+"_"+df["channel"].astype("str")
-    # df["os_channel"] = df["os"].astype("str")+"_"+df["channel"].astype("str")
-
     print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
     print("Bucketing...")
     df["ip_bucket"] = pd.cut(df.ip,ipbuckets, labels=range(ipbuckets))
@@ -181,10 +138,12 @@ def save(df, outfile, ischunked):
 #####
 # Execute the training process
 #####
-def execute(csvfile, outfile, ipbuckets, appbuckets, osbuckets, channelbuckets, devicebuckets, ischunked):
+def execute(trainfile, testfile, outtrainfile, outtestfile, ipbuckets, appbuckets, osbuckets, channelbuckets, devicebuckets, ischunked):
 
-    print("Using csvfile: ", csvfile)
-    print("Using outfile: ", outfile)
+    print("Using trainfile: ", trainfile)
+    print("Using testfile: ", testfile)
+    print("Using outtrainfile: ", outtrainfile)
+    print("Using outtestfile: ", outtestfile)
     print("Using ipbuckets: ", ipbuckets)
     print("Using appbuckets: ", appbuckets)
     print("Using osbuckets: ", osbuckets)
@@ -193,24 +152,87 @@ def execute(csvfile, outfile, ipbuckets, appbuckets, osbuckets, channelbuckets, 
     print("Using ischunked: ", ischunked)
 
     print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
-    print("Loading data, csvfile: ", csvfile)
-    df = load(csvfile)
-    print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
-    print("Input: ")
-    print(df.head(n=10))
+    print("Loading data, trainfile: ", trainfile)
+    traindf = load(trainfile)
+    print(traindf.head())
 
-    # print("Transforming data, istest: ", istest)
+    print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+    print("Loading data, testfile: ", testfile)
+    testdf = load(testfile)
+    print(testdf.head())
+
+    print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+    print("Merging train and test data")
+    df, trainidx, testidx, is_attributeds, click_ids = merge(traindf, testdf)
+    print("Merged dataframes, trainidx: ", trainidx, ", testidx: ", testidx)
+
     print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
     print("Transforming data")
-    # df = transform(df, ipbuckets, istest)
     df = transform(df, ipbuckets, appbuckets, osbuckets, channelbuckets, devicebuckets)
     print(df.head(n=10))
     print(list(df.columns.values))
 
     print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
-    print("Saving data, outfile: ", outfile)
-    save(df, outfile, ischunked)
+    print("Separating train and test data")
+    traindf, testdf = separate(df, trainidx, testidx, is_attributeds, click_ids)
+    print("Separated dataframes, traindf: ", traindf.shape, ", testdf: ", testdf.shape)
+
     print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+    print("Saving data, outtrainfile: ", outtrainfile)
+    save(traindf, outtrainfile, ischunked)
+    print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+
+    print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+    print("Saving data, outtestfile: ", outtestfile)
+    save(testdf, outtestfile, ischunked)
+    print("Timestamp: ", strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+
+#####
+# Merge the train and test file and return respective indices
+#####
+def merge(traindf, testdf):
+
+    # Cleanup the training file and retain the is_attributed flag
+    is_attributeds = traindf["is_attributed"]
+    traindf = traindf.drop(["attributed_time"], axis = 1)
+    traindf = traindf.drop(["is_attributed"], axis = 1)
+
+    # Cleanup the test file and retain the click_id flag
+    click_ids = testdf["click_id"]
+    testdf = testdf.drop(["click_id"], axis = 1)
+    testdf = testdf.reset_index(drop=True)
+
+    trainrows = traindf.shape[0]
+    testrows = testdf.shape[0]
+    trainidx = (0, trainrows)
+    testidx = (trainrows, trainrows+testrows)
+
+    df = traindf.append(testdf, ignore_index=True)
+
+    return df, trainidx, testidx, is_attributeds, click_ids
+
+
+#####
+# Separate the train and test merged dataframe
+#####
+def separate(df, trainidx, testidx, is_attributeds, click_ids):
+    trainstart, trainend = trainidx
+    teststart, testend = testidx
+
+    # Create the training dataframe and add in is_attributed column
+    traindf = df[trainstart:trainend]
+    # traindf["is_attributed"] = is_attributeds.values
+    traindf.insert(loc=len(traindf.columns.values), column="is_attributed", value=is_attributeds.values)
+
+    # Create test dataframe and add back in the click_id column
+    testdf = df[teststart:testend]
+    testdf.insert(loc=0, column="click_id", value=click_ids.values)
+    # testdf["click_id"] = click_ids
+    # cols = ["click_id", "ip", "app", "device", "os", "channel", "click_time"]
+    # testdf = testdf[cols]
+
+    return traindf, testdf
+
 
 #####
 # Parse the command line
@@ -222,14 +244,16 @@ def cli():
 
     # Parse the command line and return the args/parameters
     parser = argparse.ArgumentParser(description="training script")
-    parser.add_argument("-c", "--csvfile", help="is the CSV file containing training data (required)")
-    parser.add_argument("-o", "--outfile", help="is the fully qualified filename for the retrieved data (required)")
-    parser.add_argument("-I", "--ipbuckets", help="is the number of IP buckets (optional, default: 15)")
-    parser.add_argument("-A", "--appbuckets", help="is the number of APP buckets (optional, default: 15)")
-    parser.add_argument("-O", "--osbuckets", help="is the number of OS buckets (optional, default: 15)")
-    parser.add_argument("-C", "--channelbuckets", help="is the number of CHANNEL buckets (optional, default: 15)")
-    parser.add_argument("-D", "--devicebuckets", help="is the number of DEVICE buckets (optional, default: 15)")
-    parser.add_argument("-x", "--chunk", help="indicates that file is to be chucked into smaller files (default: False)")
+    parser.add_argument("-t", "--trainfile", help="is the CSV file containing training data (required)")
+    parser.add_argument("-T", "--testfile", help="is the CSV file containing test data (required)")
+    parser.add_argument("-o", "--outtrainfile", help="is the transformed training file (required)")
+    parser.add_argument("-O", "--outtestfile", help="is the transformed test file (required)")
+    parser.add_argument("-i", "--ipbuckets", help="is the number of IP buckets (optional, default: 15)")
+    parser.add_argument("-a", "--appbuckets", help="is the number of APP buckets (optional, default: 15)")
+    parser.add_argument("-s", "--osbuckets", help="is the number of OS buckets (optional, default: 15)")
+    parser.add_argument("-c", "--channelbuckets", help="is the number of CHANNEL buckets (optional, default: 15)")
+    parser.add_argument("-d", "--devicebuckets", help="is the number of DEVICE buckets (optional, default: 15)")
+    parser.add_argument("-C", "--chunk", help="indicates that file is to be chucked into smaller files (default: False)")
 
     args = parser.parse_args()
     return args
@@ -245,10 +269,14 @@ def main():
 
     # Get the command line parameters
     args = cli()
-    if not args.csvfile:
-        raise Exception("Missing argument: --csvfile")
-    if not args.outfile:
-        raise Exception("Missing argument: --outfile")
+    if not args.trainfile:
+        raise Exception("Missing argument: --trainfile")
+    if not args.testfile:
+        raise Exception("Missing argument: --trainfile")
+    if not args.outtrainfile:
+        raise Exception("Missing argument: --outtrainfile")
+    if not args.outtestfile:
+        raise Exception("Missing argument: --outtestfile")
 
     if not args.ipbuckets:
         args.ipbuckets = 15
@@ -267,8 +295,10 @@ def main():
 
     # Execute the command
     execute(
-        args.csvfile,
-        args.outfile,
+        args.trainfile,
+        args.testfile,
+        args.outtrainfile,
+        args.outtestfile,
         int(args.ipbuckets),
         int(args.appbuckets),
         int(args.osbuckets),

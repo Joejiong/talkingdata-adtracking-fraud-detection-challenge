@@ -35,6 +35,7 @@ def kauc(y_true, y_pred):
        score = tf.identity(score)
    return score
 
+
 #####
 # Load the CSV test file
 #####
@@ -59,23 +60,21 @@ def loadMODEL(model_file):
 def score(model, X_val, Y_val, threshold):
 
     #Predict on test set
-    predictions_NN_prob = model.predict(X_val)
-    predictions_NN_prob = predictions_NN_prob[:,0]
-
-    if threshold:
-        show_score(Y_val, predictions_NN_prob, threshold)
-        return
-
-    for i in range(30,70,1):
-        threshold = float(i/100)
-        show_score(Y_val, predictions_NN_prob, threshold)
+    raw_predictions = model.predict(X_val)
+    probabilities = raw_predictions[:,0]
+    false_positive_rate, recall, thresholds = roc_curve(Y_val, probabilities)
+    roc_auc = auc(false_positive_rate, recall)
+    print("ROC-AUC: {:0.6f}".format(roc_auc))
+    show_score(Y_val, probabilities)
+    return roc_auc, probabilities
 
 
-def show_score(Y_val, predictions, threshold):
-    print("\n--- Threshold: ", threshold)
+
+def show_score(Y_val, probabilities):
 
     #Turn probability to 0-1 binary output
-    binary_score = np.where(predictions > threshold, 1, 0)
+    threshold = 0.5
+    binary_score = np.where(probabilities > threshold, 1, 0)
     # predictions_NN_01 = predictions_NN_prob
 
     print('Accuracy:  ', accuracy_score(Y_val, binary_score))
@@ -85,7 +84,7 @@ def show_score(Y_val, predictions, threshold):
     print('\nClassification Report:\n', classification_report(Y_val, binary_score))
 
     # Show Area Under Curve (key evaluation metric)
-    roc_auc = roc_auc_score(Y_val, binary_score)
+    roc_auc = roc_auc_score(Y_val, probabilities)
     print("ROC-AUC: ", roc_auc)
 
     # Since this is a classifier, show the confusion matrix
