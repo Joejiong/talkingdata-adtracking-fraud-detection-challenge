@@ -17,24 +17,26 @@ np.set_printoptions(formatter={"float": "{:0.5f}".format})
 #####
 def execute(csvfile, pct, outfile, seed):
 
-    print("Using csvfile: ", csvfile)
-    print("Using pct:     ", pct)
-    print("Using outfile: ", outfile)
-    print("Using seed:    ", seed)
-
     np.random.seed(seed)
 
+    print("Using csvfile:  ", csvfile)
+    print("Using pct:      ", pct)
+    print("Using outfile:  ", outfile)
+    print("Using seed:     ", seed)
+
     # Large files sizes require chunking (otherwise memory usage errors occur)
-    chunksize = 10000000
+    chunksize = 1e6
+    print("Using chunksize:", chunksize)
     chunknum = 0
     for chunk in pd.read_csv(csvfile, header=0, chunksize=chunksize):
-        print("\n--- Chunk: ", chunknum, ", size: ", chunksize)
         chunk = chunk.sample(frac=pct, random_state=seed)
 
         if "is_attributed" in chunk.columns.values:
-            count = chunk.is_attributed.sum()
-            dist = count/chunk.shape[0]
-            print("Count: {:5} Distribution: {:0.5f}".format(count, dist))
+            zeros = chunk.is_attributed.value_counts()[0]
+            ones = chunk.is_attributed.value_counts()[1]
+            total = zeros + ones
+            dist = ones/total
+            print("CHUNK: {:7} ZEROS: {:7} ONES: {:7} TOTAL: {:8} DIST: {:0.5f}".format(chunknum, zeros, ones, total, dist))
 
         with_header = False
         if chunknum == 0:

@@ -11,10 +11,10 @@ import tensorflow as tf
 
 import keras
 from keras.models import Sequential
-from keras.callbacks import Callback
 from keras.layers import Activation, Dense, Dropout
 from keras import optimizers
 # from keras import regularizers
+from keras.callbacks import Callback
 from keras import backend as K
 from keras.callbacks import ModelCheckpoint, EarlyStopping, TensorBoard, ReduceLROnPlateau, BaseLogger
 
@@ -30,11 +30,11 @@ ES_PATIENCE = 7
 ES_MIN_DELTA = 1e-4
 
 RLRP_PATIENCE = 7
-RLRP_MIN_LR = 1e-4
-RLRP_FACTOR = 0.5
+RLRP_MIN_LR = 1e-6
+RLRP_FACTOR = 0.25
 
-OPT_LEARNING_RATE = 1.0*1e-4
-OPT_DECAY = 1e-5
+OPT_LEARNING_RATE = 1.0*1e-5
+OPT_DECAY = 1e-7
 
 #####
 # Defaults
@@ -43,7 +43,7 @@ EPOCHS = 100
 BATCH_SIZE = 1000
 RANDOM_SEED = 0
 
-LAYER1_SIZE = 500
+LAYER1_SIZE = 1000
 
 #####
 # Some programatic default values
