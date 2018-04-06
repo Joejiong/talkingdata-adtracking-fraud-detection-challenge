@@ -1,0 +1,642 @@
+Scope: 0.01
+                             IMPOR	LASSO	PCAxx	REGRE	RIDGE	STABL	UNIVA	MEANx
+ip                       		 0.351 	 0.001 	 0.474 	 0.000 	 0.000 	   nan 	 0.038 	 0.144
+app                      		 0.011 	 0.000 	 0.248 	 0.000 	 0.077 	   nan 	 0.000 	 0.056
+device                   		 0.004 	 0.367 	 0.216 	 0.000 	 0.008 	   nan 	 0.000 	 0.099
+os                       		 0.004 	 0.000 	 0.032 	 0.000 	 0.036 	   nan 	 0.000 	 0.012
+channel                  		 0.006 	 0.224 	 0.012 	 0.000 	 0.012 	   nan 	 0.000 	 0.042
+hour                     		 0.003 	 0.000 	 0.005 	 0.000 	 0.141 	   nan 	 0.000 	 0.025
+day                      		 0.001 	 0.000 	 0.003 	 0.477 	 0.354 	   nan 	 0.000 	 0.139
+wday                     		 0.001 	 0.000 	 0.003 	 0.477 	 0.354 	   nan 	 0.000 	 0.139
+ip_app                   		 0.008 	 0.006 	 0.002 	 0.000 	 0.000 	   nan 	 0.074 	 0.015
+ip_device                		 0.004 	 0.001 	 0.001 	 0.000 	 0.000 	   nan 	 0.084 	 0.015
+ip_os                    		 0.003 	 0.002 	 0.001 	 0.000 	 0.000 	   nan 	 0.014 	 0.003
+ip_channel               		 0.003 	 0.009 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.005
+ip_hour                  		 0.003 	 0.003 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+ip_day                   		 0.001 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+ip_wday                  		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+app_device               		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.084 	 0.015
+app_os                   		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.014 	 0.003
+app_channel              		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.003
+app_hour                 		 0.003 	 0.003 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_day                  		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+app_wday                 		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+device_os                		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.014 	 0.003
+device_channel           		 0.007 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.004
+device_hour              		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_day               		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+device_wday              		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+os_channel               		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.003
+os_hour                  		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+os_day                   		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+os_wday                  		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+channel_hour             		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+channel_day              		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+channel_wday             		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+ip_app_device            		 0.011 	 0.006 	 0.000 	 0.000 	 0.000 	   nan 	 0.068 	 0.014
+ip_app_os                		 0.005 	 0.039 	 0.000 	 0.000 	 0.001 	   nan 	 0.008 	 0.009
+ip_app_channel           		 0.009 	 0.011 	 0.000 	 0.000 	 0.000 	   nan 	 0.013 	 0.006
+ip_app_hour              		 0.005 	 0.022 	 0.000 	 0.000 	 0.001 	   nan 	 0.004 	 0.005
+ip_app_day               		 0.007 	 0.011 	 0.000 	 0.000 	 0.000 	   nan 	 0.023 	 0.007
+ip_app_wday              		 0.013 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.023 	 0.006
+ip_device_os             		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.012 	 0.003
+ip_device_channel        		 0.009 	 0.006 	 0.000 	 0.000 	 0.000 	   nan 	 0.016 	 0.005
+ip_device_hour           		 0.004 	 0.004 	 0.000 	 0.001 	 0.000 	   nan 	 0.004 	 0.002
+ip_device_day            		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.024 	 0.005
+ip_device_wday           		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.024 	 0.004
+ip_os_channel            		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.002 	 0.001
+ip_os_hour               		 0.004 	 0.020 	 0.000 	 0.001 	 0.000 	   nan 	 0.001 	 0.004
+ip_os_day                		 0.003 	 0.003 	 0.000 	 0.001 	 0.000 	   nan 	 0.004 	 0.002
+ip_os_wday               		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+ip_channel_hour          		 0.003 	 0.000 	 0.000 	 0.003 	 0.000 	   nan 	 0.001 	 0.001
+ip_channel_day           		 0.005 	 0.003 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+ip_channel_wday          		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+ip_hour_day              		 0.002 	 0.001 	 0.000 	 0.001 	 0.000 	   nan 	 0.000 	 0.001
+ip_hour_wday             		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+ip_day_wday              		 0.001 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+app_device_os            		 0.003 	 0.002 	 0.000 	 0.000 	 0.000 	   nan 	 0.012 	 0.003
+app_device_channel       		 0.007 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.016 	 0.004
+app_device_hour          		 0.004 	 0.002 	 0.000 	 0.001 	 0.000 	   nan 	 0.004 	 0.002
+app_device_day           		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.024 	 0.004
+app_device_wday          		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.024 	 0.004
+app_os_channel           		 0.005 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.002 	 0.001
+app_os_hour              		 0.004 	 0.014 	 0.000 	 0.001 	 0.000 	   nan 	 0.001 	 0.003
+app_os_day               		 0.002 	 0.003 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.002
+app_os_wday              		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+app_channel_hour         		 0.004 	 0.000 	 0.000 	 0.001 	 0.000 	   nan 	 0.001 	 0.001
+app_channel_day          		 0.004 	 0.003 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+app_channel_wday         		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+app_hour_day             		 0.003 	 0.003 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_hour_wday            		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_day_wday             		 0.001 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+device_os_channel        		 0.003 	 0.026 	 0.000 	 0.000 	 0.000 	   nan 	 0.002 	 0.005
+device_os_hour           		 0.004 	 0.000 	 0.000 	 0.001 	 0.000 	   nan 	 0.001 	 0.001
+device_os_day            		 0.002 	 0.002 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+device_os_wday           		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+device_channel_hour      		 0.004 	 0.000 	 0.000 	 0.001 	 0.000 	   nan 	 0.001 	 0.001
+device_channel_day       		 0.003 	 0.008 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.003
+device_channel_wday      		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+device_hour_day          		 0.002 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_hour_wday         		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+device_day_wday          		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+os_channel_hour          		 0.005 	 0.000 	 0.000 	 0.001 	 0.000 	   nan 	 0.001 	 0.001
+os_channel_day           		 0.003 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+os_channel_wday          		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+os_hour_day              		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+os_hour_wday             		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+os_day_wday              		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+channel_hour_day         		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+channel_hour_wday        		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+channel_day_wday         		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+ip_app_device_os         		 0.006 	 0.040 	 0.000 	 0.000 	 0.001 	   nan 	 0.008 	 0.009
+ip_app_device_channel    		 0.011 	 0.010 	 0.000 	 0.000 	 0.000 	   nan 	 0.012 	 0.006
+ip_app_device_hour       		 0.005 	 0.021 	 0.000 	 0.000 	 0.001 	   nan 	 0.003 	 0.005
+ip_app_device_day        		 0.015 	 0.002 	 0.000 	 0.000 	 0.000 	   nan 	 0.021 	 0.006
+ip_app_device_wday       		 0.009 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.021 	 0.005
+ip_app_os_channel        		 0.006 	 0.002 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+ip_app_os_hour           		 0.007 	 0.000 	 0.000 	 0.000 	 0.001 	   nan 	 0.000 	 0.001
+ip_app_os_day            		 0.008 	 0.004 	 0.000 	 0.000 	 0.000 	   nan 	 0.003 	 0.003
+ip_app_os_wday           		 0.008 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.003 	 0.002
+ip_app_channel_hour      		 0.007 	 0.002 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.002
+ip_app_channel_day       		 0.013 	 0.007 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.004
+ip_app_channel_wday      		 0.012 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.003
+ip_app_hour_day          		 0.007 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+ip_app_hour_wday         		 0.007 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+ip_app_day_wday          		 0.008 	 0.008 	 0.000 	 0.000 	 0.000 	   nan 	 0.023 	 0.007
+ip_device_os_channel     		 0.009 	 0.000 	 0.000 	 0.000 	 0.001 	   nan 	 0.002 	 0.002
+ip_device_os_hour        		 0.005 	 0.036 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.007
+ip_device_os_day         		 0.003 	 0.005 	 0.000 	 0.000 	 0.000 	   nan 	 0.003 	 0.002
+ip_device_os_wday        		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.003 	 0.001
+ip_device_channel_hour   		 0.004 	 0.005 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.002
+ip_device_channel_day    		 0.005 	 0.004 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+ip_device_channel_wday   		 0.007 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+ip_device_hour_day       		 0.003 	 0.002 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+ip_device_hour_wday      		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+ip_device_day_wday       		 0.005 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.024 	 0.005
+ip_os_channel_hour       		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+ip_os_channel_day        		 0.003 	 0.000 	 0.000 	 0.002 	 0.000 	   nan 	 0.001 	 0.001
+ip_os_channel_wday       		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+ip_os_hour_day           		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+ip_os_hour_wday          		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+ip_os_day_wday           		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+ip_channel_hour_day      		 0.003 	 0.000 	 0.000 	 0.011 	 0.000 	   nan 	 0.000 	 0.003
+ip_channel_hour_wday     		 0.003 	 0.000 	 0.000 	 0.002 	 0.000 	   nan 	 0.000 	 0.001
+ip_channel_day_wday      		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+ip_hour_day_wday         		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_device_os_channel    		 0.005 	 0.024 	 0.000 	 0.000 	 0.001 	   nan 	 0.002 	 0.005
+app_device_os_hour       		 0.004 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+app_device_os_day        		 0.004 	 0.002 	 0.000 	 0.000 	 0.000 	   nan 	 0.003 	 0.002
+app_device_os_wday       		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.003 	 0.001
+app_device_channel_hour  		 0.006 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+app_device_channel_day   		 0.005 	 0.008 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.003
+app_device_channel_wday  		 0.006 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+app_device_hour_day      		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+app_device_hour_wday     		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+app_device_day_wday      		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.024 	 0.005
+app_os_channel_hour      		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_os_channel_day       		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+app_os_channel_wday      		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+app_os_hour_day          		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_os_hour_wday         		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_os_day_wday          		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+app_channel_hour_day     		 0.004 	 0.000 	 0.000 	 0.002 	 0.000 	   nan 	 0.000 	 0.001
+app_channel_hour_wday    		 0.005 	 0.000 	 0.000 	 0.002 	 0.000 	   nan 	 0.000 	 0.001
+app_channel_day_wday     		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+app_hour_day_wday        		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_os_channel_hour   		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_os_channel_day    		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+device_os_channel_wday   		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+device_os_hour_day       		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_os_hour_wday      		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_os_day_wday       		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+device_channel_hour_day  		 0.004 	 0.000 	 0.000 	 0.002 	 0.000 	   nan 	 0.000 	 0.001
+device_channel_hour_wday 		 0.003 	 0.000 	 0.000 	 0.002 	 0.000 	   nan 	 0.000 	 0.001
+device_channel_day_wday  		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+device_hour_day_wday     		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+os_channel_hour_day      		 0.004 	 0.000 	 0.000 	 0.001 	 0.000 	   nan 	 0.000 	 0.001
+os_channel_hour_wday     		 0.003 	 0.000 	 0.000 	 0.001 	 0.000 	   nan 	 0.000 	 0.001
+os_channel_day_wday      		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+os_hour_day_wday         		 0.002 	 0.000 	 0.000 	 0.001 	 0.000 	   nan 	 0.000 	 0.001
+channel_hour_day_wday    		 0.002 	 0.000 	 0.000 	 0.001 	 0.000 	   nan 	 0.000 	 0.001
+
+-------------
+Scope:  0.005
+                             IMPOR	 LASSO	 PCAxx	 REGRE	 RIDGE	 STABL	 UNIVA	 MEANx
+ip                       		 0.310 	 0.001 	 0.467 	 0.000 	 0.000 	   nan 	 0.075 	 0.142
+app                      		 0.006 	 0.000 	 0.245 	 0.000 	 0.095 	   nan 	 0.000 	 0.058
+device                   		 0.003 	 0.294 	 0.213 	 0.000 	 0.007 	   nan 	 0.000 	 0.086
+os                       		 0.004 	 0.000 	 0.032 	 0.000 	 0.038 	   nan 	 0.000 	 0.012
+channel                  		 0.010 	 0.186 	 0.020 	 0.000 	 0.012 	   nan 	 0.000 	 0.038
+hour                     		 0.005 	 0.000 	 0.012 	 0.000 	 0.138 	   nan 	 0.000 	 0.026
+day                      		 0.001 	 0.000 	 0.003 	 0.498 	 0.336 	   nan 	 0.000 	 0.140
+wday                     		 0.001 	 0.000 	 0.003 	 0.498 	 0.336 	   nan 	 0.000 	 0.140
+ip_app                   		 0.007 	 0.012 	 0.002 	 0.000 	 0.000 	   nan 	 0.071 	 0.015
+ip_device                		 0.001 	 0.001 	 0.001 	 0.000 	 0.000 	   nan 	 0.079 	 0.014
+ip_os                    		 0.003 	 0.004 	 0.001 	 0.000 	 0.000 	   nan 	 0.015 	 0.004
+ip_channel               		 0.008 	 0.015 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.006
+ip_hour                  		 0.003 	 0.003 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+ip_day                   		 0.002 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+ip_wday                  		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+app_device               		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.079 	 0.014
+app_os                   		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.003
+app_channel              		 0.006 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.003
+app_hour                 		 0.003 	 0.004 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_day                  		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+app_wday                 		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+device_os                		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.003
+device_channel           		 0.009 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.004
+device_hour              		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_day               		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+device_wday              		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+os_channel               		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.003
+os_hour                  		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+os_day                   		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+os_wday                  		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+channel_hour             		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+channel_day              		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+channel_wday             		 0.001 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+ip_app_device            		 0.013 	 0.012 	 0.000 	 0.000 	 0.000 	   nan 	 0.065 	 0.015
+ip_app_os                		 0.006 	 0.066 	 0.000 	 0.000 	 0.002 	   nan 	 0.008 	 0.014
+ip_app_channel           		 0.014 	 0.016 	 0.000 	 0.000 	 0.001 	   nan 	 0.012 	 0.007
+ip_app_hour              		 0.009 	 0.004 	 0.000 	 0.000 	 0.002 	   nan 	 0.004 	 0.003
+ip_app_day               		 0.009 	 0.020 	 0.000 	 0.000 	 0.000 	   nan 	 0.022 	 0.009
+ip_app_wday              		 0.015 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.022 	 0.006
+ip_device_os             		 0.005 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.012 	 0.003
+ip_device_channel        		 0.007 	 0.009 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.005
+ip_device_hour           		 0.004 	 0.005 	 0.000 	 0.000 	 0.001 	   nan 	 0.003 	 0.002
+ip_device_day            		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.022 	 0.004
+ip_device_wday           		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.022 	 0.004
+ip_os_channel            		 0.005 	 0.000 	 0.000 	 0.000 	 0.001 	   nan 	 0.002 	 0.001
+ip_os_hour               		 0.004 	 0.026 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.005
+ip_os_day                		 0.004 	 0.006 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.002
+ip_os_wday               		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+ip_channel_hour          		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+ip_channel_day           		 0.003 	 0.004 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+ip_channel_wday          		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+ip_hour_day              		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+ip_hour_wday             		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+ip_day_wday              		 0.001 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+app_device_os            		 0.004 	 0.003 	 0.000 	 0.000 	 0.000 	   nan 	 0.012 	 0.003
+app_device_channel       		 0.008 	 0.002 	 0.000 	 0.000 	 0.000 	   nan 	 0.015 	 0.004
+app_device_hour          		 0.004 	 0.001 	 0.000 	 0.000 	 0.001 	   nan 	 0.003 	 0.001
+app_device_day           		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.022 	 0.004
+app_device_wday          		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.022 	 0.004
+app_os_channel           		 0.006 	 0.000 	 0.000 	 0.000 	 0.001 	   nan 	 0.002 	 0.001
+app_os_hour              		 0.004 	 0.017 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.004
+app_os_day               		 0.003 	 0.006 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.002
+app_os_wday              		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+app_channel_hour         		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+app_channel_day          		 0.003 	 0.004 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+app_channel_wday         		 0.006 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+app_hour_day             		 0.003 	 0.003 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_hour_wday            		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+app_day_wday             		 0.001 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+device_os_channel        		 0.005 	 0.031 	 0.000 	 0.000 	 0.001 	   nan 	 0.002 	 0.006
+device_os_hour           		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+device_os_day            		 0.002 	 0.003 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.002
+device_os_wday           		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+device_channel_hour      		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+device_channel_day       		 0.003 	 0.009 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.003
+device_channel_wday      		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+device_hour_day          		 0.004 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_hour_wday         		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_day_wday          		 0.002 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+os_channel_hour          		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+os_channel_day           		 0.003 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+os_channel_wday          		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+os_hour_day              		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+os_hour_wday             		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+os_day_wday              		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+channel_hour_day         		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+channel_hour_wday        		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+channel_day_wday         		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+ip_app_device_os         		 0.012 	 0.069 	 0.000 	 0.000 	 0.003 	   nan 	 0.008 	 0.015
+ip_app_device_channel    		 0.011 	 0.014 	 0.000 	 0.000 	 0.001 	   nan 	 0.011 	 0.006
+ip_app_device_hour       		 0.007 	 0.001 	 0.000 	 0.000 	 0.002 	   nan 	 0.003 	 0.002
+ip_app_device_day        		 0.007 	 0.006 	 0.000 	 0.000 	 0.000 	   nan 	 0.020 	 0.006
+ip_app_device_wday       		 0.006 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.020 	 0.004
+ip_app_os_channel        		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+ip_app_os_hour           		 0.007 	 0.000 	 0.000 	 0.000 	 0.001 	   nan 	 0.000 	 0.001
+ip_app_os_day            		 0.007 	 0.005 	 0.000 	 0.000 	 0.000 	   nan 	 0.003 	 0.002
+ip_app_os_wday           		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.003 	 0.001
+ip_app_channel_hour      		 0.009 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.002
+ip_app_channel_day       		 0.011 	 0.009 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.004
+ip_app_channel_wday      		 0.014 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.003
+ip_app_hour_day          		 0.008 	 0.000 	 0.000 	 0.001 	 0.000 	   nan 	 0.001 	 0.002
+ip_app_hour_wday         		 0.007 	 0.000 	 0.000 	 0.001 	 0.000 	   nan 	 0.001 	 0.001
+ip_app_day_wday          		 0.007 	 0.013 	 0.000 	 0.000 	 0.000 	   nan 	 0.022 	 0.007
+ip_device_os_channel     		 0.005 	 0.000 	 0.000 	 0.000 	 0.001 	   nan 	 0.002 	 0.001
+ip_device_os_hour        		 0.004 	 0.044 	 0.000 	 0.000 	 0.001 	   nan 	 0.001 	 0.008
+ip_device_os_day         		 0.004 	 0.011 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.003
+ip_device_os_wday        		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+ip_device_channel_hour   		 0.005 	 0.011 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.003
+ip_device_channel_day    		 0.004 	 0.008 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.003
+ip_device_channel_wday   		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+ip_device_hour_day       		 0.004 	 0.000 	 0.000 	 0.000 	 0.001 	   nan 	 0.001 	 0.001
+ip_device_hour_wday      		 0.005 	 0.000 	 0.000 	 0.000 	 0.001 	   nan 	 0.001 	 0.001
+ip_device_day_wday       		 0.001 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.022 	 0.004
+ip_os_channel_hour       		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+ip_os_channel_day        		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+ip_os_channel_wday       		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+ip_os_hour_day           		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+ip_os_hour_wday          		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+ip_os_day_wday           		 0.003 	 0.001 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+ip_channel_hour_day      		 0.004 	 0.000 	 0.000 	 0.001 	 0.000 	   nan 	 0.000 	 0.001
+ip_channel_hour_wday     		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+ip_channel_day_wday      		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+ip_hour_day_wday         		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_device_os_channel    		 0.005 	 0.028 	 0.000 	 0.000 	 0.001 	   nan 	 0.002 	 0.006
+app_device_os_hour       		 0.005 	 0.000 	 0.000 	 0.000 	 0.001 	   nan 	 0.001 	 0.001
+app_device_os_day        		 0.005 	 0.002 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.002
+app_device_os_wday       		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+app_device_channel_hour  		 0.006 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+app_device_channel_day   		 0.006 	 0.004 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.002
+app_device_channel_wday  		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+app_device_hour_day      		 0.003 	 0.000 	 0.000 	 0.000 	 0.001 	   nan 	 0.001 	 0.001
+app_device_hour_wday     		 0.003 	 0.000 	 0.000 	 0.000 	 0.001 	   nan 	 0.001 	 0.001
+app_device_day_wday      		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.022 	 0.004
+app_os_channel_hour      		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_os_channel_day       		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+app_os_channel_wday      		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+app_os_hour_day          		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_os_hour_wday         		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_os_day_wday          		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+app_channel_hour_day     		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_channel_hour_wday    		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+app_channel_day_wday     		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+app_hour_day_wday        		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_os_channel_hour   		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_os_channel_day    		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+device_os_channel_wday   		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.001 	 0.001
+device_os_hour_day       		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_os_hour_wday      		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_os_day_wday       		 0.004 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.004 	 0.001
+device_channel_hour_day  		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_channel_hour_wday 		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+device_channel_day_wday  		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+device_hour_day_wday     		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+os_channel_hour_day      		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+os_channel_hour_wday     		 0.005 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+os_channel_day_wday      		 0.002 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.005 	 0.001
+os_hour_day_wday         		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.000
+channel_hour_day_wday    		 0.003 	 0.000 	 0.000 	 0.000 	 0.000 	   nan 	 0.000 	 0.001
+
+---- Feature importances (0.01)
+name: ip                        0.357007
+name: ip_app_channel            0.014827
+name: ip_app_device_channel     0.013212
+name: ip_app                    0.013174
+name: ip_app_wday               0.011590
+name: ip_app_device_wday        0.011316
+name: channel                   0.010682
+name: ip_device_channel         0.010578
+name: ip_app_device             0.009951
+name: ip_app_hour               0.009775
+name: ip_app_channel_hour       0.009522
+name: ip_app_channel_wday       0.009262
+name: ip_app_device_os          0.009124
+name: app_device_channel        0.008639
+name: ip_app_day_wday           0.008151
+name: ip_app_device_hour        0.007835
+name: ip_app_channel_day        0.007719
+name: ip_app_os_channel         0.007500
+name: device_channel            0.007447
+name: app_device                0.007340
+name: ip_app_hour_wday          0.007230
+name: ip_app_device_day         0.007151
+name: ip_app_day                0.006374
+name: ip_channel                0.006246
+name: ip_app_hour_day           0.006013
+name: ip_os_channel             0.005976
+name: app_device_os_channel     0.005734
+name: app                       0.005702
+name: ip_device_os_channel      0.005666
+name: app_channel               0.005551
+name: ip_app_os_hour            0.005548
+name: ip_app_os_day             0.005537
+name: ip_app_os_wday            0.005482
+name: app_device_os             0.005282
+name: ip_app_os                 0.005267
+name: app_device_channel_day    0.005134
+name: ip_device_channel_wday    0.005083
+name: app_device_os_hour        0.004892
+name: app_device_os_wday        0.004876
+name: device_os_channel         0.004699
+name: ip_os_hour_day            0.004686
+name: ip_device_os_hour         0.004645
+name: hour                      0.004614
+name: device_os_channel_hour    0.004606
+name: ip_device_channel_hour    0.004563
+name: app_os_channel_wday       0.004426
+name: ip_device_os              0.004319
+name: os_channel_hour_wday      0.004274
+name: app_os_channel_hour       0.004241
+name: device_os_channel_wday    0.004235
+name: device_channel_day_wday   0.004184
+name: device_channel_day        0.004095
+name: ip_device_channel_day     0.004091
+name: ip_os_channel_wday        0.004067
+name: ip_hour_wday              0.004063
+name: app_channel_wday          0.004055
+name: app_device_channel_hour   0.004054
+name: device_channel_hour       0.003981
+name: ip_channel_wday           0.003940
+name: ip_os_channel_day         0.003890
+name: ip_channel_hour           0.003875
+name: ip_os_channel_hour        0.003874
+name: app_os_channel            0.003867
+name: ip_os_hour_wday           0.003863
+name: device_channel_wday       0.003853
+name: app_os_hour               0.003852
+name: ip_device_os_wday         0.003805
+name: app_channel_hour_day      0.003788
+name: app_device_channel_wday   0.003747
+name: app_os_hour_wday          0.003736
+name: os                        0.003708
+name: app_channel_hour          0.003691
+name: device_os_hour            0.003674
+name: ip_channel_hour_day       0.003655
+name: device_os                 0.003603
+name: ip_os_hour                0.003582
+name: device_os_hour_day        0.003575
+name: device_os_wday            0.003547
+name: ip_channel_day_wday       0.003545
+name: device_os_hour_wday       0.003542
+name: os_channel_hour           0.003468
+name: app_device_os_day         0.003461
+name: device_channel_hour_day   0.003454
+name: app_device_wday           0.003423
+name: ip_device_os_day          0.003414
+name: ip_device_hour_wday       0.003405
+name: app_os_hour_day           0.003393
+name: ip_device                 0.003364
+name: app_channel_hour_wday     0.003363
+name: os_channel_day_wday       0.003355
+name: app_os_channel_day        0.003326
+name: app_device_hour_day       0.003276
+name: app_device_day            0.003250
+name: ip_channel_hour_wday      0.003248
+name: ip_device_hour            0.003241
+name: app_device_hour           0.003232
+name: ip_device_hour_day        0.003227
+name: os_channel_hour_day       0.003218
+name: app_channel_day_wday      0.003177
+name: device_os_channel_day     0.003174
+name: device_channel_hour_wday  0.003143
+name: ip_hour_day_wday          0.003074
+name: os_channel_wday           0.003047
+name: device_os_day             0.003006
+name: device_os_day_wday        0.002995
+name: os_hour_wday              0.002892
+name: os_channel                0.002889
+name: device                    0.002855
+name: device_hour               0.002714
+name: app_os_day_wday           0.002661
+name: app_hour_day_wday         0.002625
+name: app_channel_day           0.002621
+name: os_hour                   0.002620
+name: app_hour_day              0.002596
+name: app_os_wday               0.002594
+name: app_device_hour_wday      0.002571
+name: device_hour_day           0.002554
+name: ip_os                     0.002522
+name: ip_os_day_wday            0.002497
+name: device_hour_day_wday      0.002464
+name: channel_hour_day          0.002440
+name: channel_hour              0.002424
+name: app_os_day                0.002415
+name: app_os                    0.002408
+name: os_hour_day_wday          0.002402
+name: app_hour                  0.002401
+name: ip_hour                   0.002388
+name: device_hour_wday          0.002372
+name: channel_hour_day_wday     0.002355
+name: os_channel_day            0.002345
+name: channel_hour_wday         0.002328
+name: ip_device_wday            0.002320
+name: ip_channel_day            0.002197
+name: os_hour_day               0.002174
+name: ip_device_day             0.002125
+name: app_hour_wday             0.002101
+name: ip_os_day                 0.002085
+name: ip_hour_day               0.001933
+name: ip_device_day_wday        0.001916
+name: ip_os_wday                0.001847
+name: app_device_day_wday       0.001696
+name: day                       0.001225
+name: device_day_wday           0.001193
+name: channel_wday              0.001090
+name: device_day                0.001017
+name: app_day                   0.000943
+name: ip_day                    0.000940
+name: ip_wday                   0.000928
+name: os_day                    0.000880
+name: ip_day_wday               0.000852
+name: channel_day               0.000757
+name: app_wday                  0.000751
+name: app_day_wday              0.000735
+name: os_day_wday               0.000735
+name: device_wday               0.000710
+name: wday                      0.000696
+name: os_wday                   0.000521
+name: channel_day_wday          0.000441
+
+---- Feature importances (sample)
+name: ip                        0.145128
+name: ip_app_device_wday        0.014509
+name: ip_app_channel_day        0.012319
+name: ip_app_channel            0.010931
+name: ip_app_channel_hour       0.009617
+name: ip_app_channel_wday       0.009519
+name: ip_app_device_os          0.009387
+name: ip_app_device_channel     0.009349
+name: ip_app                    0.009324
+name: app_channel_hour          0.009268
+name: ip_app_hour               0.009011
+name: app                       0.008872
+name: ip_app_day_wday           0.008710
+name: ip_os_channel_hour        0.008688
+name: ip_app_hour_day           0.008658
+name: ip_app_os                 0.008566
+name: ip_device_channel         0.008504
+name: app_os_channel_hour       0.008387
+name: ip_app_hour_wday          0.008225
+name: channel                   0.008162
+name: ip_app_device_day         0.007896
+name: ip_app_os_hour            0.007822
+name: ip_app_device             0.007822
+name: ip_device_os_hour         0.007754
+name: ip_device_channel_day     0.007539
+name: hour                      0.007483
+name: ip_app_device_hour        0.007465
+name: app_device_os_channel     0.007461
+name: ip_app_os_channel         0.007440
+name: ip_app_os_wday            0.007419
+name: device_channel_wday       0.007406
+name: device_channel_hour_wday  0.007366
+name: device_channel_hour       0.007319
+name: app_os_hour               0.007226
+name: ip_app_day                0.007027
+name: os_channel                0.006890
+name: device_os_channel         0.006780
+name: app_os_wday               0.006778
+name: ip_channel_hour_wday      0.006751
+name: os_hour_wday              0.006737
+name: ip_channel_hour           0.006692
+name: os_channel_hour_wday      0.006634
+name: ip_os_hour_day            0.006581
+name: app_hour_wday             0.006579
+name: app_hour                  0.006494
+name: device_channel_day        0.006452
+name: channel_hour_wday         0.006369
+name: app_device_channel        0.006369
+name: app_hour_day_wday         0.006342
+name: ip_device_channel_hour    0.006331
+name: app_device_channel_wday   0.006302
+name: ip_os_channel             0.006252
+name: ip_hour_day               0.006250
+name: device_os_channel_hour    0.006244
+name: os                        0.006177
+name: channel_hour              0.006146
+name: device_os_hour            0.006096
+name: ip_device_os_day          0.006087
+name: app_channel_hour_day      0.006054
+name: ip_os_channel_day         0.006048
+name: app_os_channel_wday       0.005985
+name: device_channel_hour_day   0.005919
+name: os_hour                   0.005887
+name: os_channel_hour_day       0.005882
+name: os_hour_day               0.005873
+name: app_channel               0.005847
+name: ip_device_os_channel      0.005677
+name: device_hour_day           0.005652
+name: device_os_channel_day     0.005631
+name: ip_os_hour                0.005625
+name: ip_hour_day_wday          0.005623
+name: app_device_hour_wday      0.005540
+name: ip_channel_day_wday       0.005502
+name: os_channel_wday           0.005493
+name: os_channel_hour           0.005481
+name: app_channel_day_wday      0.005472
+name: ip_os_hour_wday           0.005393
+name: app_os_day                0.005366
+name: app_device_hour           0.005326
+name: ip_os_channel_wday        0.005300
+name: device_os_channel_wday    0.005269
+name: app_os_channel_day        0.005248
+name: app_os_hour_wday          0.005237
+name: app_device_day            0.005213
+name: app_device_wday           0.005203
+name: ip_app_os_day             0.005179
+name: ip_hour                   0.005168
+name: app_channel_wday          0.005159
+name: app_channel_day           0.005134
+name: ip_channel_hour_day       0.005097
+name: app_os_channel            0.005083
+name: app_device_day_wday       0.005049
+name: app_device_os_day         0.005022
+name: app_channel_hour_wday     0.004992
+name: app_hour_day              0.004940
+name: app_os_day_wday           0.004915
+name: device_hour               0.004900
+name: os_channel_day_wday       0.004882
+name: app_os                    0.004844
+name: device_os_wday            0.004815
+name: channel_hour_day          0.004726
+name: device_os_hour_day        0.004606
+name: ip_device_hour_day        0.004582
+name: ip_device_os_wday         0.004551
+name: app_device_hour_day       0.004528
+name: os_hour_day_wday          0.004498
+name: device_hour_day_wday      0.004491
+name: device_os_day             0.004393
+name: device_os                 0.004361
+name: app_device_os_hour        0.004351
+name: ip_device_channel_wday    0.004309
+name: app_device_channel_hour   0.004266
+name: ip_app_wday               0.004265
+name: ip_device_os              0.004265
+name: ip_hour_wday              0.004260
+name: ip_os                     0.004232
+name: app_device_channel_day    0.004184
+name: ip_channel_wday           0.004183
+name: channel_day               0.004032
+name: app_device_os_wday        0.004026
+name: channel_hour_day_wday     0.003994
+name: ip_os_wday                0.003834
+name: app_os_hour_day           0.003797
+name: ip_device_hour            0.003766
+name: device_os_day_wday        0.003710
+name: ip_device                 0.003669
+name: ip_channel_day            0.003624
+name: device_os_hour_wday       0.003431
+name: ip_channel                0.003360
+name: ip_device_hour_wday       0.003354
+name: app_wday                  0.003317
+name: device_day                0.003310
+name: ip_os_day                 0.003260
+name: device_channel            0.003252
+name: ip_device_day_wday        0.003190
+name: device                    0.003028
+name: ip_os_day_wday            0.003009
+name: app_device_os             0.002996
+name: device_channel_day_wday   0.002782
+name: ip_device_wday            0.002726
+name: channel_wday              0.002637
+name: os_day_wday               0.002508
+name: device_hour_wday          0.002477
+name: ip_device_day             0.002450
+name: app_day_wday              0.002181
+name: os_wday                   0.002181
+name: day                       0.002150
+name: ip_day_wday               0.001931
+name: channel_day_wday          0.001896
+name: ip_wday                   0.001885
+name: device_wday               0.001819
+name: os_channel_day            0.001719
+name: os_day                    0.001712
+name: app_day                   0.001565
+name: app_device                0.001363
+name: ip_day                    0.001247
+name: wday                      0.001048
+name: device_day_wday           0.000878

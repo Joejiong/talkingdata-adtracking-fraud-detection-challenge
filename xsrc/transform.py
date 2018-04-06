@@ -1,11 +1,12 @@
 import argparse
+import os
+
 import numpy as np
 
-import sys
-sys.path.append('..')
+# import sys
+# sys.path.append('..')
 
 from xdata import Data
-from xmodel import DenseModel
 
 #####
 # Programatic default values
@@ -16,24 +17,36 @@ np.set_printoptions(formatter={"float": "{: 0.5f}".format})
 #####
 # Execute the program
 #####
-def execute(trainfile, testfile, seed):
+def execute(trainfile, testfile):
 
     print("--- Executing")
-    print("Using trainfile:  ", trainfile)
-    print("Using testfile:   ", testfile)
-    print("Using seed:       ", seed)
+    print("Using trainfile (in):  ", trainfile)
+    print("Using testfile (in):   ", testfile)
 
     print("--- Transforming data")
+    traindir, trainfilename = os.path.split(trainfile)
+    trainfilename, _ = os.path.splitext(trainfilename)
+    trainfilename = trainfilename + ".h5"
+    trainout = traindir + "/" + "transform-" + trainfilename
+    testdir, testfilename = os.path.split(testfile)
+    testfilename, _ = os.path.splitext(testfilename)
+    testfilename = testfilename + ".h5"
+    testout = testdir + "/" + "transform-" + testfilename
     data = Data.Data()
-    X_train, X_test, Y_train = data.transform(trainfile=trainfile, testfile=testfile)
+    X_train, X_test = data.transform(trainfile=trainfile, testfile=testfile)
     print("X_train shape: ", X_train.shape)
-    print("Y_train shape: ", Y_train.shape)
+    print("X_train columns: ", X_train.columns.values)
+    print("X_train data: \n", X_train.head())
     print("X_test shape:  ", X_test.shape)
+    print("X_test columns: ", X_test.columns.values)
+    print("X_test data: \n", X_test.head())
 
     print("--- Saving data")
-    modelfile = modeldir + "/" + "dense-model-final-" + roc_auc + ".h5"
-    model.save(modelfile)
-    print("Data saved to: ", modelfile)
+    print("Using trainfile (out): ", trainout)
+    print("Using testfile (out):  ", testout)
+
+    data.save(X_train, trainout)
+    data.save(X_test, testout)
 
 
 #####
@@ -48,7 +61,6 @@ def cli():
     parser = argparse.ArgumentParser(description="training script")
     parser.add_argument("-t", "--trainfile", help="is the CSV file containing training data (required)")
     parser.add_argument("-T", "--testfile", help="is the CSV file containing test data (required)")
-    parser.add_argument("-s", "--seed", help="is the random seed (optional, default: 0)")
     args = parser.parse_args()
     return args
 
@@ -67,11 +79,9 @@ def main():
         raise Exception("Missing argument: --trainfile")
     if not args.testfile:
         raise Exception("Missing argument: --testfile")
-    if not args.seed:
-        args.seed = RANDOM_SEED
 
     # Execute the command
-    execute(args.trainfile, args.testfile, int(args.seed))
+    execute(args.trainfile, args.testfile)
 
 
 main()

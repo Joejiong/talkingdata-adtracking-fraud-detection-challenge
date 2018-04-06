@@ -26,11 +26,11 @@ class DenseModel:
     #####
     # Constants
     #####
-    ES_PATIENCE = 5
+    ES_PATIENCE = 3
     ES_MIN_DELTA = 1e-6
 
-    RLRP_PATIENCE = 5
-    RLRP_MIN_LR = 1e-6
+    RLRP_PATIENCE = 1
+    RLRP_MIN_LR = 1e-8
     RLRP_FACTOR = 0.25
 
     OPT_LEARNING_RATE = 1.0*1e-5
@@ -38,11 +38,9 @@ class DenseModel:
 
     LAYER1_SIZE = 1000
 
-    def __init__(self, modeldir=".", logdir=".", seed=0):
+    def __init__(self, seed=0):
         # Initialize model
 
-        self._modeldir = modeldir
-        self._logdir = logdir
         self._seed = seed
         self._model = None
 
@@ -63,7 +61,7 @@ class DenseModel:
         return X
 
 
-    def fit(self, X_train, X_test, Y_train, epochs=2, batch_size=20000):
+    def fit(self, X_train, X_test, Y_train, modeldir=".", logdir=".", epochs=2, batch_size=20000):
 
         # Establish the network
         max_app = np.max([X_train['app'].max(), X_test['app'].max()])+1
@@ -118,8 +116,9 @@ class DenseModel:
         exp_decay = lambda init, fin, steps: (init/fin)**(1/(steps-1)) - 1
         steps = int(len(X_train) / batch_size) * epochs
         # lr_init, lr_fin = 0.001, 0.0001
-        lr_init, lr_fin = 0.0001, 0.00001
-        lr_decay = exp_decay(lr_init, lr_fin, steps)
+        lr_init, lr_fin = 0.00005, 0.000005
+        # lr_decay = exp_decay(lr_init, lr_fin, steps)
+        lr_decay = 0.0000001
         lr = lr_init
         optimizer_adam = optimizers.Adam(lr=lr, decay=lr_decay)
         # lr = DenseModel.OPT_LEARNING_RATE
@@ -138,11 +137,11 @@ class DenseModel:
         # Establish class weights since this is a very unbalanced dataset
         class_weight = dict(zip([0, 1], compute_class_weight('balanced', [0, 1], Y_train)))
         print("Unbalanced data, actual class_weight: ", class_weight)
-        class_weight = {0:.01, 1:.99}
+        # class_weight = {0:.01, 1:.99}
         print("Unbalanced data, using  class_weight: ", class_weight)
 
         # Establish callbacks for training
-        modelpath = self._modeldir + '/' + 'dense-model-checkpoint.h5'
+        modelpath = modeldir + '/' + 'dense-model-checkpoint.h5'
         CHK = ModelCheckpoint(
             modelpath, monitor="val_loss", verbose=1,
             save_best_only=True, save_weights_only=False,
@@ -151,11 +150,12 @@ class DenseModel:
             monitor="val_loss", min_delta=DenseModel.ES_MIN_DELTA,
             patience=DenseModel.ES_PATIENCE, verbose=2, mode="auto")
         TB = TensorBoard(
-            log_dir=self._logdir, histogram_freq=0,
+            log_dir=logdir, histogram_freq=0,
             write_graph=True, write_images=False)
         RLRP = ReduceLROnPlateau(
             monitor="val_loss", factor=DenseModel.RLRP_FACTOR,
-            patience=DenseModel.RLRP_PATIENCE, min_lr=DenseModel.RLRP_MIN_LR)
+            patience=DenseModel.RLRP_PATIENCE, min_lr=DenseModel.RLRP_MIN_LR,
+            verbose=1)
         BL = BaseLogger()
         # ROC = ROCCallback.ROCCallback()
 
@@ -184,6 +184,7 @@ class DenseModel:
 
     def predict(self, X_test):
         # Predict model
+        X_test = self.convert(X_test)
         predictions = self._model.predict(X_test)
         return predictions
 

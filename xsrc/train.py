@@ -27,26 +27,38 @@ def execute(trainfile, testfile, modeldir, logdir, epochs, batch_size, seed ):
     print("Using batch_size: ", batch_size)
     print("Using seed:       ", seed)
 
-    print("--- Transforming data")
+    print("--- Loading (transformed) data")
     data = Data.Data()
-    X_train, X_test, Y_train = data.transform(trainfile=trainfile, testfile=testfile)
+    X_train = data.load(trainfile)
+    Y_train = X_train["is_attributed"].values
+
+    # For scoring (uses sample of training data)
+    fraction = 0.5
+    X_fraction = X_train.sample(frac=fraction, random_state=seed)
+    Y_fraction = X_fraction["is_attributed"].values
+
+    X_train.drop(["is_attributed"], 1, inplace=True)
+    X_test = data.load(testfile)
+
     print("X_train shape: ", X_train.shape)
     print("Y_train shape: ", Y_train.shape)
     print("X_test shape:  ", X_test.shape)
 
     print("--- Creating model")
-    model = DenseModel.DenseModel(modeldir=modeldir, logdir=logdir)
+    model = DenseModel.DenseModel()
 
     print("--- Training model")
-    model.fit(X_train, X_test, Y_train, epochs=epochs, batch_size=batch_size)
+    model.fit(
+        X_train, X_test, Y_train,
+        modeldir=modeldir, logdir=logdir,
+        epochs=epochs, batch_size=batch_size)
 
     print("--- Scoring model")
-    X_sample = X_train.sample(frac=0.10)
-    Y_sample = X_sample["is_attributed"].values
-    X_sample.drop(['click_id', 'click_time', 'ip', 'is_attributed'], 1, inplace=True)
-    X_sample = model.convert(X_sample)
+    print("Fraction used for scoring: ", fraction)
+    print("X_fraction shape: ", X_fraction.shape)
+    print("Y_fraction shape: ", Y_fraction.shape)
 
-    roc_auc, probabilities = model.score(X_sample, Y_sample)
+    roc_auc, probabilities = model.score(X_fraction, Y_fraction)
     print("Score probabilities shape: ", probabilities.shape)
     roc_auc = "{:0.6f}".format(roc_auc)
     print("Score: ROC-AUC: ",roc_auc)
@@ -55,16 +67,6 @@ def execute(trainfile, testfile, modeldir, logdir, epochs, batch_size, seed ):
     modelfile = modeldir + "/" + "dense-model-final-" + roc_auc + ".h5"
     model.save(modelfile)
     print("Model saved to: ", modelfile)
-
-    print("--- Loading model")
-    model.load(modelfile)
-    print("Model loaded from: ", modelfile)
-
-    print("--- Predicting using model")
-    X_test = model.convert(X_test)
-    probabilities = model.predict(X_test)
-    print("Predict probabilities shape: ", probabilities.shape)
-
 
 #####
 # Parse the command line

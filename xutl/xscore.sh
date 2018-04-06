@@ -6,79 +6,56 @@
 # Author:  Eric Broda, ericbroda@rogers.com
 #
 # Parameters:
-#    [trainfile] is the CSV file containing training data (required)
-#    [model-dir] is the fully qualified directory to store checkpoint models (required)
-#    [log-dir] is the fully qualified directory where the tensorboard logs will be saved (required)
-#    [epochs] is the number of epochs (optional, default: 100)
-#    [batch] is the batch size (optional, default: 1000)
-#    [seed] is the random seed (optional, default: 0)
+#    [scorefile] is the HDF5 file containing scoreing data (required)
+#    [modelfile] is the fully qualified directory to store checkpoint models (required)
+#    [fraction] is the fraction of data from the infile to be fractiond (required)
+#    [seed] is the random number seed (optional)
 #
 # Usage:
 #
-#   train.sh [trainfile] [testfile] [model-dir] [log-dir] [epochs] [batch]
+#   score.sh [infile] [modelfile] [fraction] [seed]
 #
-#   example: train.sh ../data/train_sample.csv ../models ../logs 100 1000
+#   example: score.sh ../data/train-sample.csv ../models/model.h5 0.25 42
 #
 
 function showHelp {
     echo " "
     echo "Error: $1"
     echo " "
-    echo "    train.sh [trainfile] [testfile] [model-dir] [log-dir] [epochs] [batch] [seed]"
+    echo "    score.sh [infile] [modelfile] [fraction]"
     echo " "
-    echo "    where [trainfile] is the CSV file containing training data (required)"
-    echo "          [testfile] is the CSV file containing test data (required)"
-    echo "          [model-dir] is the fully qualified directory to store checkpoint models (required)"
-    echo "          [log-dir] is the fully qualified directory where the tensorboard logs will be saved (required)"
-    echo "          [epochs] is the number of epochs (optional, default: 100)"
-    echo "          [batch] is the batch size (optional, default: 1000)"
-    echo "          [seed] is the random seed (optional, default: 0)"
+    echo "    where [infile] is the HDF5 file containing transformed training data (required)"
+    echo "          [modelfile] is the fully qualified file to the model (required)"
+    echo "          [fraction] is the fraction of data from the infile to be sampled nd scored (required)"
+    echo "          [seed] is the random number seed (optional)"
     echo " "
-    echo "    example 1:  ./train.sh ../data/train_sample.csv ../data/test_sample.csv ../models ../logs 100 1000 0"
+    echo "    example 1:  ./score.sh ../data/train-sample.csv ../models/dense-model-checkpoint.h5 0.25 42"
     echo " "
 }
 
-xTRAINFILE="$1"
+xINFILE="$1"
 if [ -z "$1" ]; then
-  showHelp "[trainfile] parameter is missing"
+  showHelp "[infile] parameter is missing"
   exit
 fi
-xTRAINFILE=$(realpath $xTRAINFILE)
+xINFILE=$(realpath $xINFILE)
 
-xTESTFILE="$2"
+xMODELFILE="$2"
 if [ -z "$2" ]; then
-  showHelp "[testfile] parameter is missing"
+  showHelp "[modelfile] parameter is missing"
   exit
 fi
-xTESTFILE=$(realpath $xTESTFILE)
+xMODELFILE=$(realpath $xMODELFILE)
 
-xMODELDIR="$3"
+xFRACTION="$3"
 if [ -z "$3" ]; then
-  showHelp "[model-dir] parameter is missing"
+  showHelp "[fraction] parameter is missing"
   exit
 fi
-xMODELDIR=$(realpath $xMODELDIR)
 
-xLOGDIR="$4"
+xSEED="$4"
 if [ -z "$4" ]; then
-  showHelp "[log-dir] parameter is missing"
-  exit
-fi
-xLOGDIR=$(realpath $xLOGDIR)
-
-xEPOCHS="$5"
-if [ -z "$5" ]; then
-  xEPOCHS=100
-fi
-
-xBATCH="$6"
-if [ -z "$6" ]; then
-  xBATCH=1000
-fi
-
-xSEED="$7"
-if [ -z "$7" ]; then
-  xSEED=0
+  xSEED=42
 fi
 
 xROOTDIR=$(realpath ../)
@@ -88,27 +65,21 @@ xSRCDIR=$(realpath $xROOTDIR/xsrc)
 
 echo " "
 echo "---- Train Parameters ----"
-echo "Training File:   $xTRAINFILE"
-echo "Test File:       $xTESTFILE"
-echo "Model Directory: $xMODELDIR"
-echo "Log Directory:   $xLOGDIR"
-echo "Epochs:          $xEPOCHS"
-echo "Batch Size:      $xBATCH"
-echo "Seed:            $xSEED"
-echo "Root Directory:  $xROOTDIR"
-echo "Source Dir:      $xSRCDIR"
+echo "Input (HDF5) File: $xINFILE"
+echo "Model File:        $xMODELFILE"
+echo "Sample pct:        $xFRACTION"
+echo "Random seed:       $xSEED"
+echo "Root Directory:    $xROOTDIR"
+echo "Source Dir:        $xSRCDIR"
 echo " "
 
 echo "Clearing old TF log files"
 rm ./logs/events.out.tfevents*
 
 echo "Start: "; date
-time python3 $xSRCDIR/train.py \
-              --trainfile $xTRAINFILE \
-              --testfile $xTESTFILE \
-              --modeldir $xMODELDIR \
-              --logdir $xLOGDIR \
-              --epochs $xEPOCHS \
-              --batch $xBATCH \
+time python3 $xSRCDIR/score.py \
+              --infile $xINFILE \
+              --modelfile $xMODELFILE \
+              --fraction $xFRACTION \
               --seed $xSEED
 echo "End: "; date
