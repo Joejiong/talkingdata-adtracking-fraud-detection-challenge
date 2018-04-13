@@ -18,8 +18,9 @@ class Data:
         print("Initializing")
 
     def group(self, df, name, columns, key, fields):
+
         print("Grouping: name: {}, columns: {}, key: {}, fields: {}".format(name, columns, key, fields))
-        gp = train_df[columns].groupby(by=fields)[key].count().reset_index().rename(index=str, columns={key: name})
+        gp = df[columns].groupby(by=fields)[[key]].count().reset_index().rename(index=str, columns={key: name})
         df = df.merge(gp, on=fields, how="left")
         del gp; gc.collect()
         return df
@@ -42,7 +43,7 @@ class Data:
         print("Loading training set: ", trainfile)
         train_df = pd.read_csv(
             trainfile, dtype=dtypes,
-            usecols=["ip","app","device","os", "channel", "click_time", "is_attributed"])
+            usecols=["ip", "app", "device", "os", "channel", "click_time", "is_attributed"])
         # print("DATA: train_df:\n", train_df.head())
 
         print("Loading test set: ", testfile)
@@ -54,35 +55,74 @@ class Data:
         train_df=train_df.append(test_df)
         del test_df; gc.collect()
 
-        print("Identifying hour, day, day of week")
+        print("Identifying quarter hour, hour, day, day of week")
         train_df["hour"] = pd.to_datetime(train_df.click_time).dt.hour.astype("uint8")
         train_df["day"] = pd.to_datetime(train_df.click_time).dt.day.astype("uint8")
         train_df["wday"]  = pd.to_datetime(train_df.click_time).dt.dayofweek.astype("uint8")
 
-        print("Grouping by ip, day, hour")
-        gp = train_df[["ip","day","hour","channel"]].groupby(by=["ip","day","hour"])[["channel"]].count().reset_index().rename(index=str, columns={"channel": "qty"})
-        train_df = train_df.merge(gp, on=["ip","day","hour"], how="left")
-        del gp; gc.collect()
+        series = pd.to_datetime(train_df.click_time).dt.minute.astype("uint8")
+        train_df["qhour"] = pd.cut(series, [0, 15, 30, 45, 60], labels=[1, 2, 3, 4]).astype("uint16")
+        del series; gc.collect()
+        #
+        series = train_df["hour"]*4 + train_df["qhour"]
+        dqrange = np.linspace(0, 4*24, num=4*24+1, dtype="uint16")
+        dqlabels = np.linspace(0, 4*24, num=4*24, dtype="uint16")
+        train_df["dqhour"] = pd.cut(series, dqrange, labels=dqlabels).astype("uint16")
+        del series; gc.collect()
+        print(train_df.head())
 
-        print("Grouping by ip, app")
-        gp = train_df[["ip","app", "channel"]].groupby(by=["ip", "app"])[["channel"]].count().reset_index().rename(index=str, columns={"channel": "ip_app_count"})
-        train_df = train_df.merge(gp, on=["ip","app"], how="left")
-        del gp; gc.collect()
+        name = "qty"
+        columns = ["ip", "day", "dqhour", "channel"]
+        key = "channel"
+        fields = ["ip", "day", "dqhour"]
+        train_df = self.group(train_df, name, columns, key, fields)
+        train_df[name] = train_df[name].astype("uint16")
 
-        print("Grouping by ip, app, os")
-        gp = train_df[["ip","app", "os", "channel"]].groupby(by=["ip", "app", "os"])[["channel"]].count().reset_index().rename(index=str, columns={"channel": "ip_app_os_count"})
-        train_df = train_df.merge(gp, on=["ip","app", "os"], how="left")
-        del gp; gc.collect()
+        name = "ip_app_count"
+        columns = ["ip", "app", "channel"]
+        key = "channel"
+        fields = ["ip", "app"]
+        train_df = self.group(train_df, name, columns, key, fields)
+        train_df[name] = train_df[name].astype("uint16")
 
-        train_df["qty"] = train_df["qty"].astype("uint16")
-        train_df["ip_app_count"] = train_df["ip_app_count"].astype("uint16")
-        train_df["ip_app_os_count"] = train_df["ip_app_os_count"].astype("uint16")
+        name = "ip_app_os_count"
+        columns = ["ip", "app", "os", "channel"]
+        key = "channel"
+        fields = ["ip", "app", "os"]
+        train_df = self.group(train_df, name, columns, key, fields)
+        train_df[name] = train_df[name].astype("uint16")
+
+        ########################## NEW (start)
+
+        #### IMPROVES SCORE!!!!
+        name = "new_column_1"
+        columns = ["app", "wday", "dqhour", "channel"]
+        key = "channel"
+        fields = ["app", "wday", "dqhour"]
+        train_df = self.group(train_df, name, columns, key, fields)
+        train_df[name] = train_df[name].astype("uint16")
+
+        #### IMPROVES SCORE!!!!
+        name = "new_column_2"
+        columns = ["os", "wday", "dqhour", "channel"]
+        key = "channel"
+        fields = ["os", "wday", "dqhour"]
+        train_df = self.group(train_df, name, columns, key, fields)
+        train_df[name] = train_df[name].astype("uint16")
+
+        #### IMPROVES SCORE!!!!
+        name = "new_column_3"
+        columns = ["channel", "wday", "dqhour", "device"]
+        key = "device"
+        fields = ["channel", "wday", "dqhour"]
+        train_df = self.group(train_df, name, columns, key, fields)
+        train_df[name] = train_df[name].astype("uint16")
+
+        ########################## NEW (end)
 
         print("Encoding labels")
         from sklearn.preprocessing import LabelEncoder
-        train_df[["app","device","os", "channel", "hour", "day", "wday"]].apply(LabelEncoder().fit_transform)
-
-        # train_df.drop(["click_id", "click_time", "ip"], 1, inplace=True)
+        train_df[["app", "device", "os", "channel", "hour", "qhour", "dqhour", "day", "wday"]].apply(LabelEncoder().fit_transform)
 
         print ("Cleaning up")
         X_test = train_df[len_train:]

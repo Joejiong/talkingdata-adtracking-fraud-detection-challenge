@@ -54,7 +54,7 @@ cd $xROOTDIR
 xSRCDIR=$(realpath $xROOTDIR/xsrc)
 
 echo " "
-echo "---- Train Parameters ----"
+echo "---- Tranform Parameters ----"
 echo "Training File:   $xTRAINFILE"
 echo "Test File:       $xTESTFILE"
 echo "Root Directory:  $xROOTDIR"

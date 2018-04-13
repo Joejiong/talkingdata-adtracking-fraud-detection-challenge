@@ -21,6 +21,7 @@ class ROCCallback(Callback):
 
     def on_epoch_end(self, epoch, logs={}):
         self.losses.append(logs.get('loss'))
+        # Need to convert data here (not implemented... will break)
         y_pred = self.model.predict(self.validation_data[0])
         score = roc_auc_score(self.validation_data[1], y_pred)
         self.aucs.append(score)

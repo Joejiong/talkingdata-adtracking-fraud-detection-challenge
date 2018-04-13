@@ -1,118 +1,118 @@
 #!/bin/bash
 
-# echo "Model: dense-model-final-0.25-0.980459.h5"
-# Leadership board score:  0.9632 (avg: 0.9821, delta: -0.0189)
-# echo "Run: 0"
-# 0.981532
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.25-0.980459.h5 0.25 0 | grep AUC
+# echo "------ PCT: sample"
+# # using hour:                             0.894941
+# # adding label encoding for qhour/dqhour: 0.896338
+# # using qhour/dqhour:                     0.892927
+# ./xtrain.sh ../data/transform-train-sample.h5 ../data/transform-test.h5 ../models ../logs 1   10000 2
 #
-# echo "Run: 1"
-# 0.981424
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.25-0.980459.h5 0.25 1 | grep AUC
+# echo "------ PCT: 0.001"
+# # using hour:                             0.985911
+# # adding label encoding for qhour/dqhour: 0.985953
+# # using qhour/dqhour:                     0.984657
+# ./xtrain.sh ../data/transform-train-0.001.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 #
-# echo "Run: 2"
-# 0.982704
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.25-0.980459.h5 0.25 2 | grep AUC
+# echo "------ PCT: 0.005"
+# # using hour:                             0.963115
+# # adding label encoding for qhour/dqhour: 0.963170
+# # using qhour/dqhour:                     0.962935
+# ./xtrain.sh ../data/transform-train-0.005.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 #
-# echo "Run: 3"
-# 0.983574
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.25-0.980459.h5 0.25 3 | grep AUC
+# echo "------ PCT: 0.010"
+# # using hour:                             0.971416
+# # adding label encoding for qhour/dqhour: 0.971416
+# # using qhour/dqhour:                     0.972254
+# ./xtrain.sh ../data/transform-train-0.010.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 #
-# echo "Run: 4"
-# 0.981641
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.25-0.980459.h5 0.25 4 | grep AUC
+# echo "------ PCT: 0.050"
+# # using hour:                             0.968689
+# # adding label encoding for qhour/dqhour: 0.968687
+# # using qhour/dqhour:                     0.969384
+# ./xtrain.sh ../data/transform-train-0.050.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
+#
+# echo "------ PCT: 0.100"
+# # using hour:                             0.971938
+# # adding label encoding for qhour/dqhour: 0.971999
+# # using qhour/dqhour:                     0.971983
+# ./xtrain.sh ../data/transform-train-0.100.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 
-# echo " "
-# echo " "
-# echo "Model: dense-model-final-0.977073.h5"
-# # Leadership board score:  0.9652 (avg: 0.9774, delta: -0.0122)
-# echo "Run: 0"
-# # 0.976601
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.50-0.977073.h5 0.25 0 | grep AUC
-#
-# echo "Run: 1"
-# # 0.976463
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.50-0.977073.h5 0.25 1 | grep AUC
-#
-# echo "Run: 2"
-# # 0.978075
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.50-0.977073.h5 0.25 2 | grep AUC
-#
-# echo "Run: 3"
-# # 0.979029
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.50-0.977073.h5 0.25 3 | grep AUC
-#
-# echo "Run: 4"
-# # 0.976927
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.50-0.977073.h5 0.25 4 | grep AUC
+echo "------ PCT: 0.500"
+# using hour:
+# adding label encoding for qhour/dqhour:
+# using qhour/dqhour:
+./xtrain.sh ../data/transform-train-0.500.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 
-# echo " "
-# echo " "
-# echo "Model: dense-model-checkpoint-0.50-0.977073.h5"
-# # Leadership board score:  0.???? (avg: 0.9768, delta: -0.????)
-# echo "Run: 0"
-# # 0.975865
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-checkpoint-0.50-0.977073.h5 0.25 0 | grep AUC
-#
-# echo "Run: 1"
-# # 0.975619
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-checkpoint-0.50-0.977073.h5 0.25 1 | grep AUC
-#
-# echo "Run: 2"
-# # 0.977381
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-checkpoint-0.50-0.977073.h5 0.25 2 | grep AUC
-#
-# echo "Run: 3"
-# # 0.978354
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-checkpoint-0.50-0.977073.h5 0.25 3 | grep AUC
-#
-# echo "Run: 4"
-# # 0.976927
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-checkpoint-0.50-0.977073.h5 0.25 4 | grep AUC
+echo "------ PCT: 1.000"
+# using hour:
+# adding label encoding for qhour/dqhour:
+# using qhour/dqhour:
+./xtrain.sh ../data/transform-train-1.000.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 
-
-# echo " "
-# echo " "
-# echo "Model: dense-model-final-0.10-0.976596x.h5 (weights: 0.501:203.567)"
-# echo "Run: 0"
-# # 0.980343
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.10-0.976596x.h5 0.25 0 | grep AUC
+# echo "------ PCT: 0.001"
+# ./xsample.sh ../data/transform-train.h5 0.001 ../data/transform-train-0.001.h5
 #
-# echo "Run: 1"
-# # 0.980415
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.10-0.976596x.h5 0.25 1 | grep AUC
+# echo "------ PCT: 0.005"
+# ./xsample.sh ../data/transform-train.h5 0.005 ../data/transform-train-0.005.h5
 #
-# echo "Run: 2"
-# # 0.982020
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.10-0.976596x.h5 0.25 2 | grep AUC
+# echo "------ PCT: 0.010"
+# ./xsample.sh ../data/transform-train.h5 0.010 ../data/transform-train-0.010.h5
 #
-# echo "Run: 3"
-# # 0.982377
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.10-0.976596x.h5 0.25 3 | grep AUC
+# echo "------ PCT: 0.050"
+# ./xsample.sh ../data/transform-train.h5 0.050 ../data/transform-train-0.050.h5
 #
-# echo "Run: 4"
-# # 0.980399
-# ./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.10-0.976596x.h5 0.25 4 | grep AUC
+# echo "------ PCT: 0.100"
+# ./xsample.sh ../data/transform-train.h5 0.100 ../data/transform-train-0.100.h5
+#
+# echo "------ PCT: 0.200"
+# ./xsample.sh ../data/transform-train.h5 0.200 ../data/transform-train-0.200.h5
+#
+# echo "------ PCT: 0.250"
+# ./xsample.sh ../data/transform-train.h5 0.250 ../data/transform-train-0.250.h5
+#
+# echo "------ PCT: 0.500"
+# ./xsample.sh ../data/transform-train.h5 0.500 ../data/transform-train-0.500.h5
 
-echo " "
-echo " "
-echo "Model: dense-model-final-0.10-0.983350.h5 (weights: 0.01:0.99)"
-echo "Run: 0"
-# 0.988189
-./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.10-0.983350.h5 0.25 0 | grep AUC
-
-echo "Run: 1"
-# 0.987778
-./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.10-0.983350.h5 0.25 1 | grep AUC
-
-echo "Run: 2"
-# 0.989003
-./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.10-0.983350.h5 0.25 2 | grep AUC
-
-echo "Run: 3"
-# 0.988930
-./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.10-0.983350.h5 0.25 3 | grep AUC
-
-echo "Run: 4"
-# 0.988108
-./xscore.sh ../data/transform-train-0.05.h5 ../models/dense-model-final-0.10-0.983350.h5 0.25 4 | grep AUC
+# echo "------ PCT: SAMPLE"
+# ./xoversample.sh ../data/transform-train-sample.h5 RANDOM
+# ./xoversample.sh ../data/transform-train-sample.h5 SMOTE
+# ./xoversample.sh ../data/transform-train-sample.h5 ADASYN
+#
+# echo "------ PCT: 0.001"
+# ./xoversample.sh ../data/transform-train-0.001.h5 RANDOM
+# ./xoversample.sh ../data/transform-train-0.001.h5 SMOTE
+# ./xoversample.sh ../data/transform-train-0.001.h5 ADASYN
+#
+# echo "------ PCT: 0.005"
+# ./xoversample.sh ../data/transform-train-0.005.h5 RANDOM
+# ./xoversample.sh ../data/transform-train-0.005.h5 SMOTE
+# ./xoversample.sh ../data/transform-train-0.005.h5 ADASYN
+#
+# echo "------ PCT: 0.010"
+# ./xoversample.sh ../data/transform-train-0.010.h5 RANDOM
+# ./xoversample.sh ../data/transform-train-0.010.h5 SMOTE
+# ./xoversample.sh ../data/transform-train-0.010.h5 ADASYN
+#
+# echo "------ PCT: 0.050"
+# ./xoversample.sh ../data/transform-train-0.050.h5 RANDOM
+# ./xoversample.sh ../data/transform-train-0.050.h5 SMOTE
+# ./xoversample.sh ../data/transform-train-0.050.h5 ADASYN
+#
+# echo "------ PCT: 0.100"
+# ./xoversample.sh ../data/transform-train-0.100.h5 RANDOM
+# ./xoversample.sh ../data/transform-train-0.100.h5 SMOTE
+# ./xoversample.sh ../data/transform-train-0.100.h5 ADASYN
+#
+# echo "------ PCT: 0.200"
+# ./xoversample.sh ../data/transform-train-0.200.h5 RANDOM
+# ./xoversample.sh ../data/transform-train-0.200.h5 SMOTE
+# ./xoversample.sh ../data/transform-train-0.200.h5 ADASYN
+#
+# echo "------ PCT: 0.250"
+# ./xoversample.sh ../data/transform-train-0.250.h5 RANDOM
+# ./xoversample.sh ../data/transform-train-0.250.h5 SMOTE
+# ./xoversample.sh ../data/transform-train-0.250.h5 ADASYN
+#
+# echo "------ PCT: 0.500"
+# ./xoversample.sh ../data/transform-train-0.500.h5 RANDOM
+# ./xoversample.sh ../data/transform-train-0.500.h5 SMOTE
+# ./xoversample.sh ../data/transform-train-0.500.h5 ADASYN
