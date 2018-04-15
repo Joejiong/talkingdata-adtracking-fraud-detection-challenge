@@ -42,11 +42,11 @@ echo "------ PCT: 0.500"
 # using qhour/dqhour:
 ./xtrain.sh ../data/transform-train-0.500.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 
-echo "------ PCT: 1.000"
+echo "------ PCT: FULL (100%)"
 # using hour:
 # adding label encoding for qhour/dqhour:
 # using qhour/dqhour:
-./xtrain.sh ../data/transform-train-1.000.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
+./xtrain.sh ../data/transform-train.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 
 # echo "------ PCT: 0.001"
 # ./xsample.sh ../data/transform-train.h5 0.001 ../data/transform-train-0.001.h5
