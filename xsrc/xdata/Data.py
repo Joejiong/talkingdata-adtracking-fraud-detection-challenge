@@ -119,8 +119,8 @@ class Data:
         most_freq_hours_in_test_data = [4, 5, 9, 10, 13, 14]
         least_freq_hours_in_test_data = [6, 11, 15]
         train_df['in_test_hh'] = (3
-            - 2*df['hour'].isin(  most_freq_hours_in_test_data )
-            - 1*df['hour'].isin( least_freq_hours_in_test_data ) ).astype('uint8')
+            - 2*train_df['hour'].isin(  most_freq_hours_in_test_data )
+            - 1*train_df['hour'].isin( least_freq_hours_in_test_data ) ).astype('uint8')
 
         ########################## NEW (end)
 
