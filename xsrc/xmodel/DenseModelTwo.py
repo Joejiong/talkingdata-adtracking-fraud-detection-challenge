@@ -14,7 +14,7 @@ from keras import optimizers
 from keras.models import Model, Sequential
 from keras.models import load_model
 from keras.layers import Input, Embedding, Dense, Flatten, Dropout, concatenate
-from keras.layers import BatchNormalization, SpatialDropout1D, GlobalAveragePooling1D, GlobalMaxPooling1D, MaxPooling1D
+from keras.layers import BatchNormalization, SpatialDropout1D, GaussianDropout
 from keras.callbacks import Callback, ModelCheckpoint, EarlyStopping, TensorBoard, ReduceLROnPlateau, BaseLogger
 
 from sklearn.metrics import confusion_matrix, roc_curve, auc, roc_auc_score
@@ -24,7 +24,7 @@ from sklearn.utils import compute_class_weight
 from xmodel import ROCCallback
 from xmodel import AUCCallback
 
-class DenseModel:
+class DenseModelTwo:
 
     #####
     # Constants
@@ -135,7 +135,11 @@ class DenseModel:
 
         # Establish the network
         emb_n = 100
-        dense_n = 1000
+        dense_n1 = 1000
+        dense_n2 = 1400
+        dense_n3 = 200
+        dense_n4 = 40
+
         in_app = Input(shape=[1], name='app')
         emb_app = Embedding(max_app, emb_n)(in_app)
         in_ch = Input(shape=[1], name='ch')
@@ -154,6 +158,7 @@ class DenseModel:
         emb_d = Embedding(max_d, emb_n)(in_d)
         in_wd = Input(shape=[1], name='wd')
         emb_wd = Embedding(max_wd, emb_n)(in_wd)
+
         in_qty = Input(shape=[1], name='qty')
         emb_qty = Embedding(max_qty, emb_n)(in_qty)
         in_c1 = Input(shape=[1], name='c1')
@@ -166,33 +171,29 @@ class DenseModel:
         emb_c4 = Embedding(max_c4, emb_n)(in_c4)
         in_c5 = Input(shape=[1], name='c5')
         emb_c5 = Embedding(max_c5, emb_n)(in_c5)
+
         fe = concatenate([
             (emb_app), (emb_ch), (emb_dev), (emb_os), (emb_h), (emb_qh), (emb_dqh),
             (emb_d), (emb_wd), (emb_qty), (emb_c1), (emb_c2), (emb_c3), (emb_c4), (emb_c5)])
-        s_dout = SpatialDropout1D(0.2)(fe)
-        fl = Flatten()(s_dout)
-        x = Dropout(0.2)(Dense(dense_n,activation='relu')(fl))
-        x = Dropout(0.2)(Dense(dense_n,activation='relu')(x))
-        gl = MaxPooling1D(pool_size=1, strides=1)(s_dout)
-        fl = Flatten()(gl)
-        x = concatenate([(x), (fl)])
-        outp = Dense(1, activation='sigmoid')(x)
-        model = Model(inputs=[in_app,in_ch,in_dev,in_os,in_h,in_dqh,in_qh,in_d,in_wd,in_qty,in_c1,in_c2,in_c3,in_c4,in_c5], outputs=outp)
+        embs = GaussianDropout(0.2)(fe)
+        embs = Flatten()(embs)
+
+        x = (BatchNormalization())(embs)
+        x = GaussianDropout(0.2)(Dense(dense_n1,activation='relu')(x))
+        x = (BatchNormalization())(x)
+        x = GaussianDropout(0.3)(Dense(dense_n2,activation='relu')(x))
+        x = (BatchNormalization())(x)
+        x = GaussianDropout(0.25)(Dense(dense_n3,activation='relu')(x))
+        x = (BatchNormalization())(x)
+        x = GaussianDropout(0.2)(Dense(dense_n4,activation='relu')(x))
+        outp = Dense(1,activation='sigmoid')(x)
+
+        model = Model(inputs=[
+            in_app,in_ch,in_dev,in_os,in_h,in_dqh,in_qh,in_d,in_wd,
+            in_qty,in_c1,in_c2,in_c3,in_c4,in_c5], outputs=outp)
 
         # Compile the model
-        exp_decay = lambda init, fin, steps: (init/fin)**(1/(steps-1)) - 1
-        steps = int(len(X_train) / batch_size) * epochs
-        # lr_init, lr_fin = 0.001, 0.0001
-        # lr_init, lr_fin = 0.00005, 0.000005
-        # lr_decay = exp_decay(lr_init, lr_fin, steps)
-        # lr_decay = 0.0000001
-        # lr = lr_init
-        # optimizer_adam = optimizers.Adam(lr=lr, decay=lr_decay)
-        # lr = DenseModel.OPT_LEARNING_RATE
-        # lr_decay = DenseModel.OPT_DECAY
-        # optimizer_adam = optimizers.adam(lr=lr, decay=lr_decay)
-        # print("Using learning init rate: ", lr, ", decay: ", lr_decay)
-        lr = DenseModel.OPT_LEARNING_RATE
+        lr = DenseModelTwo.OPT_LEARNING_RATE
         optimizer_adam = optimizers.Adam(lr=lr)
         print("Using learning init rate: ", lr)
         model.compile(
@@ -217,14 +218,14 @@ class DenseModel:
             save_best_only=True, save_weights_only=False,
             mode="auto", period=1)
         ES = EarlyStopping(
-            monitor="val_loss", min_delta=DenseModel.ES_MIN_DELTA,
-            patience=DenseModel.ES_PATIENCE, verbose=2, mode="auto")
+            monitor="val_loss", min_delta=DenseModelTwo.ES_MIN_DELTA,
+            patience=DenseModelTwo.ES_PATIENCE, verbose=2, mode="auto")
         TB = TensorBoard(
             log_dir=logdir, histogram_freq=0,
             write_graph=True, write_images=False)
         RLRP = ReduceLROnPlateau(
-            monitor="val_loss", factor=DenseModel.RLRP_FACTOR,
-            patience=DenseModel.RLRP_PATIENCE, min_lr=DenseModel.RLRP_MIN_LR,
+            monitor="val_loss", factor=DenseModelTwo.RLRP_FACTOR,
+            patience=DenseModelTwo.RLRP_PATIENCE, min_lr=DenseModelTwo.RLRP_MIN_LR,
             verbose=1)
         BL = BaseLogger()
         # ROC = ROCCallback.ROCCallback()
