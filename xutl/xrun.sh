@@ -36,41 +36,41 @@
 # # using qhour/dqhour:                     0.971983
 # ./xtrain.sh ../data/transform-train-0.100.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 
-echo "------ PCT: 0.500"
-# using hour:
-# adding label encoding for qhour/dqhour:
-# using qhour/dqhour:
-./xtrain.sh ../data/transform-train-0.500.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
-
-echo "------ PCT: FULL (100%)"
-# using hour:
-# adding label encoding for qhour/dqhour:
-# using qhour/dqhour:
-./xtrain.sh ../data/transform-train.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
-
-# echo "------ PCT: 0.001"
-# ./xsample.sh ../data/transform-train.h5 0.001 ../data/transform-train-0.001.h5
-#
-# echo "------ PCT: 0.005"
-# ./xsample.sh ../data/transform-train.h5 0.005 ../data/transform-train-0.005.h5
-#
-# echo "------ PCT: 0.010"
-# ./xsample.sh ../data/transform-train.h5 0.010 ../data/transform-train-0.010.h5
-#
-# echo "------ PCT: 0.050"
-# ./xsample.sh ../data/transform-train.h5 0.050 ../data/transform-train-0.050.h5
-#
-# echo "------ PCT: 0.100"
-# ./xsample.sh ../data/transform-train.h5 0.100 ../data/transform-train-0.100.h5
-#
-# echo "------ PCT: 0.200"
-# ./xsample.sh ../data/transform-train.h5 0.200 ../data/transform-train-0.200.h5
-#
-# echo "------ PCT: 0.250"
-# ./xsample.sh ../data/transform-train.h5 0.250 ../data/transform-train-0.250.h5
-#
 # echo "------ PCT: 0.500"
-# ./xsample.sh ../data/transform-train.h5 0.500 ../data/transform-train-0.500.h5
+# # using hour:
+# # adding label encoding for qhour/dqhour:
+# # using qhour/dqhour:
+# ./xtrain.sh ../data/transform-train-0.500.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
+#
+# echo "------ PCT: FULL (100%)"
+# # using hour:
+# # adding label encoding for qhour/dqhour:
+# # using qhour/dqhour:
+# ./xtrain.sh ../data/transform-train.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
+
+echo "------ PCT: 0.001"
+./xsample.sh ../data/transform-train.h5 0.001 ../data/transform-train-0.001.h5
+
+echo "------ PCT: 0.005"
+./xsample.sh ../data/transform-train.h5 0.005 ../data/transform-train-0.005.h5
+
+echo "------ PCT: 0.010"
+./xsample.sh ../data/transform-train.h5 0.010 ../data/transform-train-0.010.h5
+
+echo "------ PCT: 0.050"
+./xsample.sh ../data/transform-train.h5 0.050 ../data/transform-train-0.050.h5
+
+echo "------ PCT: 0.100"
+./xsample.sh ../data/transform-train.h5 0.100 ../data/transform-train-0.100.h5
+
+echo "------ PCT: 0.200"
+./xsample.sh ../data/transform-train.h5 0.200 ../data/transform-train-0.200.h5
+
+echo "------ PCT: 0.250"
+./xsample.sh ../data/transform-train.h5 0.250 ../data/transform-train-0.250.h5
+
+echo "------ PCT: 0.500"
+./xsample.sh ../data/transform-train.h5 0.500 ../data/transform-train-0.500.h5
 
 # echo "------ PCT: SAMPLE"
 # ./xoversample.sh ../data/transform-train-sample.h5 RANDOM

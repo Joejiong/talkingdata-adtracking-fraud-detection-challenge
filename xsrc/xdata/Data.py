@@ -25,6 +25,7 @@ class Data:
         del gp; gc.collect()
         return df
 
+
     def transform(self, trainfile="train.csv", testfile="test.csv"):
         print("Using trainfile: ", trainfile)
         print("Using testfile:  ", testfile)
@@ -92,9 +93,6 @@ class Data:
         train_df = self.group(train_df, name, columns, key, fields)
         train_df[name] = train_df[name].astype("uint16")
 
-        ########################## NEW (start)
-
-        #### IMPROVES SCORE!!!!
         name = "new_column_1"
         columns = ["app", "wday", "dqhour", "channel"]
         key = "channel"
@@ -102,7 +100,6 @@ class Data:
         train_df = self.group(train_df, name, columns, key, fields)
         train_df[name] = train_df[name].astype("uint16")
 
-        #### IMPROVES SCORE!!!!
         name = "new_column_2"
         columns = ["os", "wday", "dqhour", "channel"]
         key = "channel"
@@ -110,13 +107,20 @@ class Data:
         train_df = self.group(train_df, name, columns, key, fields)
         train_df[name] = train_df[name].astype("uint16")
 
-        #### IMPROVES SCORE!!!!
         name = "new_column_3"
         columns = ["channel", "wday", "dqhour", "device"]
         key = "device"
         fields = ["channel", "wday", "dqhour"]
         train_df = self.group(train_df, name, columns, key, fields)
         train_df[name] = train_df[name].astype("uint16")
+
+        ########################## NEW (start)
+
+        most_freq_hours_in_test_data = [4, 5, 9, 10, 13, 14]
+        least_freq_hours_in_test_data = [6, 11, 15]
+        train_df['in_test_hh'] = (3
+            - 2*df['hour'].isin(  most_freq_hours_in_test_data )
+            - 1*df['hour'].isin( least_freq_hours_in_test_data ) ).astype('uint8')
 
         ########################## NEW (end)
 
@@ -129,6 +133,7 @@ class Data:
         X_test.drop(["click_time", "ip", "is_attributed"], 1, inplace=True)
         X_train = train_df[:len_train]
         X_train.drop(["click_id", "click_time", "ip"], 1, inplace=True)
+
 
         return X_train, X_test
 
