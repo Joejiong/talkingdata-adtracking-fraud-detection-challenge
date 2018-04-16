@@ -16,7 +16,8 @@ from imblearn.over_sampling import RandomOverSampler, ADASYN, SMOTE
 from xdata import Data
 # from xmodel import DenseModelOne
 # from xmodel import DenseModelTwo
-from xmodel import DenseModelThree
+# from xmodel import DenseModelThree
+from xmodel import DenseModelFour
 
 #####
 # Programatic default values
@@ -97,8 +98,7 @@ def execute(trainfile, testfile, modeldir, logdir, epochs, batch_size, seed):
     print("Y_validation shape: ", Y_validation.shape)
 
     print("--- Creating model")
-    # model = DenseModelOne.DenseModelOne()
-    model = DenseModelThree.DenseModelThree()
+    model = DenseModelFour.DenseModelFour()
 
     print("--- Configuring model")
     model.configure(X_train, X_test, X_validation)
