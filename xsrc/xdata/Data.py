@@ -85,9 +85,10 @@ class Data:
 
             # Scale the new feature to 0-1
             from sklearn.preprocessing import MinMaxScaler
-            scaler = MinMaxScaler()
+            scaler = MinMaxScaler(feature_range=(0, 255))
             print("Scaling feature: ", new_feature)
             df[[new_feature]] = scaler.fit_transform(df[[new_feature]].as_matrix())
+            df[new_feature] = df[new_feature].astype("uint8")
 
             new_columns.append(new_feature)
 

@@ -34,12 +34,16 @@ def execute(trainfile, testfile):
     testout = testdir + "/" + "transform-" + testfilename
     data = Data.Data()
     X_train, X_test = data.transform(trainfile=trainfile, testfile=testfile)
+
     print("X_train shape: ", X_train.shape)
     print("X_train columns: ", X_train.columns.values)
     print("X_train data: \n", X_train.head())
+    print("X_train memory:\n", X_train.info(memory_usage='deep'))
+
     print("X_test shape:  ", X_test.shape)
     print("X_test columns: ", X_test.columns.values)
     print("X_test data: \n", X_test.head())
+    print("X_test memory:\n", X_test.info(memory_usage='deep'))
 
     print("--- Saving data")
     print("Using trainfile (out): ", trainout)
