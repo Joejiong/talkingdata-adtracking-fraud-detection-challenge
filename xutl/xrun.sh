@@ -5,6 +5,8 @@ echo "------ PCT: sample"
 # adding label encoding for qhour/dqhour: 0.896338
 # using qhour/dqhour:                     0.892927
 # new model:                              0.977557
+# confidence levels (new, bad model):     TBD
+# confidence levels (new, good model):    TBD
 ./xtrain.sh ../data/transform-train-sample.h5 ../data/transform-test.h5 ../models ../logs 1   10000 2
 
 echo "------ PCT: 0.001"
@@ -12,6 +14,8 @@ echo "------ PCT: 0.001"
 # adding label encoding for qhour/dqhour: 0.985953
 # using qhour/dqhour:                     0.984657
 # new model:                              0.961159
+# confidence levels (new, bad model):     0.972970
+# confidence levels (new, good model):    TBD
 ./xtrain.sh ../data/transform-train-0.001.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 
 echo "------ PCT: 0.005"
@@ -19,6 +23,8 @@ echo "------ PCT: 0.005"
 # adding label encoding for qhour/dqhour: 0.963170
 # using qhour/dqhour:                     0.962935
 # new model:                              0.961925
+# confidence levels (new, bad model):     0.963681
+# confidence levels (new, good model):    TBD
 ./xtrain.sh ../data/transform-train-0.005.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 
 echo "------ PCT: 0.010"
@@ -26,6 +32,8 @@ echo "------ PCT: 0.010"
 # adding label encoding for qhour/dqhour: 0.971416
 # using qhour/dqhour:                     0.972254
 # new model:                              0.970681
+# confidence levels (new, bad model):     0.973678
+# confidence levels (new, good model):    TBD
 ./xtrain.sh ../data/transform-train-0.010.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 
 echo "------ PCT: 0.050"
@@ -33,6 +41,8 @@ echo "------ PCT: 0.050"
 # adding label encoding for qhour/dqhour: 0.968687
 # using qhour/dqhour:                     0.969384
 # new model:                              0.966576
+# confidence levels (new, bad model):     0.967011
+# confidence levels (new, good model):    TBD
 ./xtrain.sh ../data/transform-train-0.050.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 
 echo "------ PCT: 0.100"
@@ -40,6 +50,8 @@ echo "------ PCT: 0.100"
 # adding label encoding for qhour/dqhour: 0.971999
 # using qhour/dqhour:                     0.971983
 # new model:
+# confidence levels (new, bad model):     0.971589
+# confidence levels (new, good model):    TBD
 ./xtrain.sh ../data/transform-train-0.100.h5  ../data/transform-test.h5 ../models ../logs 1   10000 2
 
 # echo "------ PCT: 0.500"
