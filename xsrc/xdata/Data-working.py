@@ -26,72 +26,6 @@ class Data:
         return df
 
 
-    def calc_confidences(self, df):
-        ATTRIBUTION_CATEGORIES = [
-            # V1 Features #
-            ###############
-            ['ip'], ['app'], ['device'], ['os'], ['channel'],
-
-            # V2 Features #
-            ###############
-            ['app', 'channel'],
-            ['app', 'os'],
-            ['app', 'device'],
-        ]
-
-        # Find frequency of is_attributed for each unique value in column
-        freqs = {}
-        new_columns = []
-        for cols in ATTRIBUTION_CATEGORIES:
-
-            # New feature name
-            new_feature = '_'.join(cols)+'_confRate'
-
-            # Perform the groupby
-            group_object = df.groupby(cols)
-
-            # Group sizes
-            group_sizes = group_object.size()
-            log_group = 100000 # 1000 views -> 60% confidence, 100 views -> 40% confidence
-            print("Calculating confidence-weighted rate for: {}.\n   Saving to: {}. Group Max /Mean / Median / Min: {} / {} / {} / {}".format(
-                cols, new_feature,
-                group_sizes.max(),
-                np.round(group_sizes.mean(), 2),
-                np.round(group_sizes.median(), 2),
-                group_sizes.min()
-            ))
-
-            # Aggregation function: Calculate the attributed rate and scale by confidence
-            def rate_calculation(x):
-                rate = x.sum() / float(x.count())
-                conf = np.min([1, np.log(x.count()) / log_group])
-                return rate * conf
-
-            # Perform the merge
-            df = df.merge(
-                group_object['is_attributed']. \
-                    apply(rate_calculation). \
-                    reset_index(). \
-                    rename(
-                        index=str,
-                        columns={'is_attributed': new_feature}
-                    )[cols + [new_feature]],
-                on=cols, how='left'
-            )
-
-            # There is garbage (NaN) data in the dataframe -- clean it up
-            df = df.fillna(0)
-
-            # Scale the new feature to 0-1
-            from sklearn.preprocessing import MinMaxScaler
-            scaler = MinMaxScaler()
-            print("Scaling feature: ", new_feature)
-            df[[new_feature]] = scaler.fit_transform(df[[new_feature]].as_matrix())
-
-            new_columns.append(new_feature)
-
-        return df, new_columns
-
     def transform(self, trainfile="train.csv", testfile="test.csv"):
         print("Using trainfile: ", trainfile)
         print("Using testfile:  ", testfile)
@@ -136,7 +70,7 @@ class Data:
         dqlabels = np.linspace(0, 4*24, num=4*24, dtype="uint16")
         train_df["dqhour"] = pd.cut(series, dqrange, labels=dqlabels).astype("uint16")
         del series; gc.collect()
-        # print(train_df.head())
+        print(train_df.head())
 
         name = "qty"
         columns = ["ip", "day", "dqhour", "channel"]
@@ -188,27 +122,11 @@ class Data:
         #     - 2*train_df['hour'].isin(  most_freq_hours_in_test_data )
         #     - 1*train_df['hour'].isin( least_freq_hours_in_test_data ) ).astype('uint8')
 
-        train_df, new_columns = self.calc_confidences(train_df)
-        print("New columns added: ", new_columns)
-        print(train_df.head())
-
         ########################## NEW (end)
 
         print("Encoding labels")
         from sklearn.preprocessing import LabelEncoder
-
-        # train_df[[
-        #     "app", "device", "os", "channel", "hour", "qhour", "dqhour", "day", "wday"
-        #     ]] = train_df[[
-        #     "app", "device", "os", "channel", "hour", "qhour", "dqhour", "day", "wday"
-        #     ]].apply(LabelEncoder().fit_transform)
-        # train_df[[
-        #     "app", "device", "os", "channel", "hour", "qhour", "dqhour", "day", "wday"
-        #     ]].apply(LabelEncoder().fit_transform)
-
-        for colname in ["app", "device", "os", "channel", "hour", "qhour", "dqhour", "day", "wday"]:
-            print("Encoding column: ", colname)
-            train_df[colname] = LabelEncoder().fit_transform(train_df[colname])
+        train_df[["app", "device", "os", "channel", "hour", "qhour", "dqhour", "day", "wday"]].apply(LabelEncoder().fit_transform)
 
         print ("Cleaning up")
         X_test = train_df[len_train:]
