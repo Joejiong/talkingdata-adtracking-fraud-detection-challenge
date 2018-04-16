@@ -78,8 +78,9 @@ class Data:
                     )[cols + [new_feature]],
                 on=cols, how='left'
             )
+            del group_object; gc.collect()
 
-            # There is garbage (NaN) data in the dataframe -- clean it up
+            # Remove NaN data in the dataframe
             df = df.fillna(0)
 
             # Scale the new feature to 0-1
@@ -215,7 +216,6 @@ class Data:
         X_test.drop(["click_time", "ip", "is_attributed"], 1, inplace=True)
         X_train = train_df[:len_train]
         X_train.drop(["click_id", "click_time", "ip"], 1, inplace=True)
-
 
         return X_train, X_test
 
