@@ -181,7 +181,7 @@ class DenseModelFour:
         emb_c4 = Embedding(max_c4, emb_n)(in_c4)
         emb_c5 = Embedding(max_c5, emb_n)(in_c5)
 
-        # in_ip_confRate = Input(shape=[1], name="ip_confRate")
+        in_ip_confRate = Input(shape=[1], name="ip_confRate")
         in_app_confRate = Input(shape=[1], name="app_confRate")
         in_device_confRate = Input(shape=[1], name="device_confRate")
         in_os_confRate = Input(shape=[1], name="os_confRate")
@@ -191,7 +191,7 @@ class DenseModelFour:
         in_app_device_confRate = Input(shape=[1], name="app_device_confRate")
 
         main = concatenate([
-            # in_ip_confRate,
+            in_ip_confRate,
             in_app_confRate,
             in_device_confRate,
             in_os_confRate,
@@ -225,7 +225,7 @@ class DenseModelFour:
         outp = Dense(1, activation='sigmoid')(x)
 
         model = Model(inputs=[
-            # in_ip_confRate,
+            in_ip_confRate,
             in_app_confRate, in_device_confRate, in_os_confRate,
             in_channel_confRate, in_app_channel_confRate, in_app_os_confRate, in_app_device_confRate,
             in_app, in_ch, in_dev, in_os, in_h, in_dqh, in_qh, in_d, in_wd,
