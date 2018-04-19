@@ -69,14 +69,14 @@ class DenseModelFour:
             "c3": np.array(df.new_column_1),
             "c4": np.array(df.new_column_2),
             "c5": np.array(df.new_column_3),
-            "ip_confRate": np.array(df.ip_confRate),
-            "app_confRate": np.array(df.app_confRate),
-            "device_confRate": np.array(df.device_confRate),
-            "os_confRate": np.array(df.os_confRate),
-            "channel_confRate": np.array(df.channel_confRate),
-            "app_channel_confRate": np.array(df.app_channel_confRate),
-            "app_os_confRate": np.array(df.app_os_confRate),
-            "app_device_confRate": np.array(df.app_device_confRate)
+            # "ip_freq": np.array(df.ip_freq),
+            # "app_freq": np.array(df.app_freq),
+            # "device_freq": np.array(df.device_freq),
+            # "os_freq": np.array(df.os_freq),
+            # "channel_freq": np.array(df.channel_freq),
+            "app_channel_freq": np.array(df.app_channel_freq),
+            "app_os_freq": np.array(df.app_os_freq),
+            "app_device_freq": np.array(df.app_device_freq)
         }
         return X
 
@@ -143,7 +143,7 @@ class DenseModelFour:
         X_train = self.convert(X_train)
 
         # Establish the network
-        emb_n = 100
+        emb_n = 50
         dense_n1 = 1000
         dense_n2 = 1400
         dense_n3 = 200
@@ -166,14 +166,14 @@ class DenseModelFour:
         in_c5 = Input(shape=[1], name="c5")
 
         emb_app = Embedding(max_app, emb_n)(in_app)
-        emb_ch = Embedding(max_ch, emb_n)(in_ch)
-        emb_dev = Embedding(max_dev, emb_n)(in_dev)
+        emb_ch = Embedding(max_ch, int(emb_n/2) )(in_ch)
+        emb_dev = Embedding(max_dev, int(emb_n*3) )(in_dev)
         emb_os = Embedding(max_os, emb_n)(in_os)
-        emb_h = Embedding(max_h, emb_n)(in_h)
-        emb_dqh = Embedding(max_dqh, emb_n)(in_dqh)
-        emb_qh = Embedding(max_qh, emb_n)(in_qh)
-        emb_d = Embedding(max_d, emb_n)(in_d)
-        emb_wd = Embedding(max_wd, emb_n)(in_wd)
+        emb_h = Embedding(max_h, int(emb_n/5) )(in_h)
+        emb_dqh = Embedding(max_dqh, int(emb_n/2) )(in_dqh)
+        emb_qh = Embedding(max_qh, int(emb_n/10) )(in_qh)
+        emb_d = Embedding(max_d, int(emb_n/5) )(in_d)
+        emb_wd = Embedding(max_wd, int(emb_n/5) )(in_wd)
         emb_qty = Embedding(max_qty, emb_n)(in_qty)
         emb_c1 = Embedding(max_c1, emb_n)(in_c1)
         emb_c2 = Embedding(max_c2, emb_n)(in_c2)
@@ -181,24 +181,24 @@ class DenseModelFour:
         emb_c4 = Embedding(max_c4, emb_n)(in_c4)
         emb_c5 = Embedding(max_c5, emb_n)(in_c5)
 
-        in_ip_confRate = Input(shape=[1], name="ip_confRate")
-        in_app_confRate = Input(shape=[1], name="app_confRate")
-        in_device_confRate = Input(shape=[1], name="device_confRate")
-        in_os_confRate = Input(shape=[1], name="os_confRate")
-        in_channel_confRate = Input(shape=[1], name="channel_confRate")
-        in_app_channel_confRate = Input(shape=[1], name="app_channel_confRate")
-        in_app_os_confRate = Input(shape=[1], name="app_os_confRate")
-        in_app_device_confRate = Input(shape=[1], name="app_device_confRate")
+        # in_ip_freq = Input(shape=[1], name="ip_freq")
+        # in_app_freq = Input(shape=[1], name="app_freq")
+        # in_device_freq = Input(shape=[1], name="device_freq")
+        # in_os_freq = Input(shape=[1], name="os_freq")
+        # in_channel_freq = Input(shape=[1], name="channel_freq")
+        in_app_channel_freq = Input(shape=[1], name="app_channel_freq")
+        in_app_os_freq = Input(shape=[1], name="app_os_freq")
+        in_app_device_freq = Input(shape=[1], name="app_device_freq")
 
         main = concatenate([
-            in_ip_confRate,
-            in_app_confRate,
-            in_device_confRate,
-            in_os_confRate,
-            in_channel_confRate,
-            in_app_channel_confRate,
-            in_app_os_confRate,
-            in_app_device_confRate,
+            # in_ip_freq,
+            # in_app_freq,
+            # in_device_freq,
+            # in_os_freq,
+            # in_channel_freq,
+            in_app_channel_freq,
+            in_app_os_freq,
+            in_app_device_freq,
             Flatten()(emb_app),
             Flatten()(emb_ch),
             Flatten()(emb_dev),
@@ -225,9 +225,8 @@ class DenseModelFour:
         outp = Dense(1, activation='sigmoid')(x)
 
         model = Model(inputs=[
-            in_ip_confRate,
-            in_app_confRate, in_device_confRate, in_os_confRate,
-            in_channel_confRate, in_app_channel_confRate, in_app_os_confRate, in_app_device_confRate,
+            # in_ip_freq, in_app_freq, in_device_freq, in_os_freq, in_channel_freq,
+            in_app_channel_freq, in_app_os_freq, in_app_device_freq,
             in_app, in_ch, in_dev, in_os, in_h, in_dqh, in_qh, in_d, in_wd,
             in_qty, in_c1, in_c2, in_c3, in_c4, in_c5], outputs=outp)
 

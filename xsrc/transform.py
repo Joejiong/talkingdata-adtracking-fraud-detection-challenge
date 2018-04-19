@@ -1,5 +1,6 @@
 import argparse
 import os
+import gc
 
 import numpy as np
 
@@ -50,7 +51,10 @@ def execute(trainfile, testfile):
     print("Using testfile (out):  ", testout)
 
     data.save(X_train, trainout)
+    del X_train; gc.collect()
+
     data.save(X_test, testout)
+    del X_test; gc.collect()
 
 
 #####

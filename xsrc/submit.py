@@ -7,7 +7,7 @@ import pandas as pd
 import argparse
 
 from xdata import Data
-from xmodel import DenseModel
+from xmodel import DenseModelFour
 
 #####
 # Constants
@@ -47,7 +47,7 @@ def execute(infile, submissionfile, modelfile):
     print("Using modelfile:      ", modelfile)
 
     print("--- Loading model")
-    model = DenseModel.DenseModel()
+    model = DenseModelFour.DenseModelFour()
     model.load(modelfile)
     print("Model loaded from: ", modelfile)
 

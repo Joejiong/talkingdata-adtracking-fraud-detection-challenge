@@ -17,6 +17,7 @@ class Data:
         # Initialize
         print("Initializing")
 
+    # Re-work these... use: https://www.kaggle.com/aharless/kaggle-runnable-version-of-baris-kanber-s-lightgbm
     def group(self, df, name, columns, key, fields):
 
         print("Grouping: name: {}, columns: {}, key: {}, fields: {}".format(name, columns, key, fields))
@@ -26,73 +27,55 @@ class Data:
         return df
 
 
-    def calc_confidences(self, df):
-        ATTRIBUTION_CATEGORIES = [
-            # V1 Features #
-            ###############
-            ['ip'], ['app'], ['device'], ['os'], ['channel'],
+    def frequencies(self, df, columns):
 
-            # V2 Features #
-            ###############
-            ['app', 'channel'],
-            ['app', 'os'],
-            ['app', 'device'],
-        ]
+        # New feature name
+        new_feature = "_".join(columns)+"_freq"
 
-        # Find frequency of is_attributed for each unique value in column
-        freqs = {}
-        new_columns = []
-        for cols in ATTRIBUTION_CATEGORIES:
+        # Perform the groupby
+        group_object = df.groupby(columns)
 
-            # New feature name
-            new_feature = '_'.join(cols)+'_confRate'
+        # Group sizes
+        group_sizes = group_object.size()
+        log_group = 100000 # 1000 views -> 60% confidence, 100 views -> 40% confidence
+        print("Calculating confidence-weighted rate for: {}\n Feature: {} \nMax /Mean / Median / Min: {} / {} / {} / {}".format(
+            columns, new_feature,
+            group_sizes.max(),
+            np.round(group_sizes.mean(), 2),
+            np.round(group_sizes.median(), 2),
+            group_sizes.min()
+        ))
 
-            # Perform the groupby
-            group_object = df.groupby(cols)
+        # Aggregation function: Calculate the attributed rate and scale by confidence
+        def rate_calculation(x):
+            rate = x.sum() / float(x.count())
+            conf = np.min([1, np.log(x.count()) / log_group])
+            return rate * conf
 
-            # Group sizes
-            group_sizes = group_object.size()
-            log_group = 100000 # 1000 views -> 60% confidence, 100 views -> 40% confidence
-            print("Calculating confidence-weighted rate for: {}.\n   Saving to: {}. Group Max /Mean / Median / Min: {} / {} / {} / {}".format(
-                cols, new_feature,
-                group_sizes.max(),
-                np.round(group_sizes.mean(), 2),
-                np.round(group_sizes.median(), 2),
-                group_sizes.min()
-            ))
+        # Perform the merge
+        df = df.merge(
+            group_object["is_attributed"]. \
+                apply(rate_calculation). \
+                reset_index(). \
+                rename(
+                    index=str,
+                    columns={"is_attributed": new_feature}
+                )[columns + [new_feature]],
+            on=columns, how="left"
+        )
+        del group_object; gc.collect()
 
-            # Aggregation function: Calculate the attributed rate and scale by confidence
-            def rate_calculation(x):
-                rate = x.sum() / float(x.count())
-                conf = np.min([1, np.log(x.count()) / log_group])
-                return rate * conf
+        # Remove NaN data in the dataframe
+        df = df.fillna(0)
 
-            # Perform the merge
-            df = df.merge(
-                group_object['is_attributed']. \
-                    apply(rate_calculation). \
-                    reset_index(). \
-                    rename(
-                        index=str,
-                        columns={'is_attributed': new_feature}
-                    )[cols + [new_feature]],
-                on=cols, how='left'
-            )
-            del group_object; gc.collect()
+        # Scale the new feature to 0-1
+        from sklearn.preprocessing import MinMaxScaler
+        scaler = MinMaxScaler(feature_range=(0, 255))
+        print("Scaling feature: ", new_feature)
+        df[[new_feature]] = scaler.fit_transform(df[[new_feature]].as_matrix())
+        df[new_feature] = df[new_feature].astype("uint8")
 
-            # Remove NaN data in the dataframe
-            df = df.fillna(0)
-
-            # Scale the new feature to 0-1
-            from sklearn.preprocessing import MinMaxScaler
-            scaler = MinMaxScaler(feature_range=(0, 255))
-            print("Scaling feature: ", new_feature)
-            df[[new_feature]] = scaler.fit_transform(df[[new_feature]].as_matrix())
-            df[new_feature] = df[new_feature].astype("uint8")
-
-            new_columns.append(new_feature)
-
-        return df, new_columns
+        return df, new_feature
 
     def transform(self, trainfile="train.csv", testfile="test.csv"):
         print("Using trainfile: ", trainfile)
@@ -126,17 +109,22 @@ class Data:
 
         print("Identifying quarter hour, hour, day, day of week")
         train_df["hour"] = pd.to_datetime(train_df.click_time).dt.hour.astype("uint8")
+        train_df["hour"] = train_df["hour"].astype("uint8")
         train_df["day"] = pd.to_datetime(train_df.click_time).dt.day.astype("uint8")
+        train_df["day"] = train_df["day"].astype("uint8")
         train_df["wday"]  = pd.to_datetime(train_df.click_time).dt.dayofweek.astype("uint8")
+        train_df["wday"] = train_df["wday"].astype("uint8")
 
         series = pd.to_datetime(train_df.click_time).dt.minute.astype("uint8")
         train_df["qhour"] = pd.cut(series, [0, 15, 30, 45, 60], labels=[1, 2, 3, 4]).astype("uint16")
+        train_df["qhour"] = train_df["qhour"].astype("uint8")
         del series; gc.collect()
         #
         series = train_df["hour"]*4 + train_df["qhour"]
         dqrange = np.linspace(0, 4*24, num=4*24+1, dtype="uint16")
         dqlabels = np.linspace(0, 4*24, num=4*24, dtype="uint16")
-        train_df["dqhour"] = pd.cut(series, dqrange, labels=dqlabels).astype("uint16")
+        train_df["dqhour"] = pd.cut(series, dqrange, labels=dqlabels)
+        train_df["dqhour"] = train_df["dqhour"].astype("uint8")
         del series; gc.collect()
         # print(train_df.head())
 
@@ -186,12 +174,22 @@ class Data:
 
         # most_freq_hours_in_test_data = [4, 5, 9, 10, 13, 14]
         # least_freq_hours_in_test_data = [6, 11, 15]
-        # train_df['in_test_hh'] = (3
-        #     - 2*train_df['hour'].isin(  most_freq_hours_in_test_data )
-        #     - 1*train_df['hour'].isin( least_freq_hours_in_test_data ) ).astype('uint8')
+        # train_df["in_test_hh"] = (3
+        #     - 2*train_df["hour"].isin(  most_freq_hours_in_test_data )
+        #     - 1*train_df["hour"].isin( least_freq_hours_in_test_data ) ).astype("uint8")
 
-        train_df, new_columns = self.calc_confidences(train_df)
-        print("New columns added: ", new_columns)
+        columns = ["app", "channel"]
+        train_df, new_feature = self.frequencies(train_df, columns)
+        print("New columns added: ", new_feature)
+
+        columns = ["app", "os"]
+        train_df, new_feature = self.frequencies(train_df, columns)
+        print("New columns added: ", new_feature)
+
+        columns = ["app", "device"]
+        train_df, new_feature = self.frequencies(train_df, columns)
+        print("New columns added: ", new_feature)
+
         print(train_df.head())
 
         ########################## NEW (end)
@@ -208,15 +206,19 @@ class Data:
         #     "app", "device", "os", "channel", "hour", "qhour", "dqhour", "day", "wday"
         #     ]].apply(LabelEncoder().fit_transform)
 
-        for colname in ["app", "device", "os", "channel", "hour", "qhour", "dqhour", "day", "wday"]:
+        for colname in ["app", "device", "os", "channel"]:
             print("Encoding column: ", colname)
             train_df[colname] = LabelEncoder().fit_transform(train_df[colname])
 
         print ("Cleaning up")
+
         X_test = train_df[len_train:]
         X_test.drop(["click_time", "ip", "is_attributed"], 1, inplace=True)
+        X_test["click_id"] = X_test["click_id"].astype("uint32")
+
         X_train = train_df[:len_train]
         X_train.drop(["click_id", "click_time", "ip"], 1, inplace=True)
+        X_train["is_attributed"] = X_train["is_attributed"].astype("uint8")
 
         return X_train, X_test
 
